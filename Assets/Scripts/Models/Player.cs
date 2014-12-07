@@ -12,7 +12,8 @@ public class Player : GameModel {
 		Up,
 		Down,
 		Right,
-		Left
+		Left,
+		Stop
 	}
 
 	public float Speed { get; set; }
@@ -32,6 +33,9 @@ public class Player : GameModel {
 			if (CurrentDirection == Player.Direction.Down) {
 				return Vector3.back;
 			}
+			if (CurrentDirection == Player.Direction.Stop) {
+				return Vector3.zero;
+			}
 
 			return Vector3.forward;
 		}
@@ -45,7 +49,7 @@ public class Player : GameModel {
 
 	public Player (Properties props) {
 		Speed = props.speed;
-		CurrentDirection = Direction.Up;
+		CurrentDirection = Direction.Stop;
 	}
 
 }

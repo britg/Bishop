@@ -8,7 +8,7 @@ public class PlayerController : GameController {
 	public Player player;
 	public Player.Properties playerInitialization;
 
-	Player.Direction nextDirection = Player.Direction.Up;
+	Player.Direction nextDirection = Player.Direction.Stop;
 	bool nextWaypointSet = false;
 	Vector3 nextWaypoint = Vector3.zero;
 
@@ -48,15 +48,30 @@ public class PlayerController : GameController {
 		}
 
 		if (AtWaypoint()) {
-			if (player.CurrentDirection != nextDirection) {
-				Debug.Log ("Changing player direction at " + transform.position);
-			}
 			player.CurrentDirection = nextDirection;
 			nextWaypoint = transform.position + player.DirectionVector;
+
+			if (!WaypointValid(nextWaypoint)) {
+				player.CurrentDirection = Player.Direction.Stop;
+			}
 		}
 	}
 
 	bool AtWaypoint () {
-		return (Vector3.SqrMagnitude(transform.position - nextWaypoint) < consideredEqual);
+		return player.CurrentDirection == Player.Direction.Stop ||
+			(Vector3.SqrMagnitude(transform.position - nextWaypoint) < consideredEqual);
 	}
+
+	bool WaypointValid (Vector3 waypoint) {
+		float testDistance = 1.1f;
+		float radius = 0.4f;
+		var hits = Physics.SphereCastAll(transform.position, radius, waypoint - transform.position, testDistance);
+		foreach (RaycastHit hit in hits) {
+			if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Walls")) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }
