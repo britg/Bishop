@@ -7,6 +7,10 @@ public class Player : GameModel {
 	public class Properties {
 		public float speed;
 		public float courage;
+		public int level;
+		public int kills;
+		public int gold;
+
 		public Direction direction;
 	}
 
@@ -18,10 +22,14 @@ public class Player : GameModel {
 		Stop
 	}
 
-	public float Speed { get; set; }
-	public float Courage { get; set; }
-	public Direction CurrentDirection { get; set; }
+	public float 	Speed { get; set; }
+	public float 	Courage { get; set; }
+	public int 	 	Level { get; set; }
+	public int 	 	Kills { get; set; }
+	public int 		Gold { get; set; }
 
+	public Direction CurrentDirection { get; set; }
+	public Vector3 Velocity { get { return Speed * DirectionVector; } }
 	public Vector3 DirectionVector {
 		get {
 			if (CurrentDirection == Player.Direction.Up) {
@@ -40,19 +48,17 @@ public class Player : GameModel {
 				return Vector3.zero;
 			}
 
-			return Vector3.forward;
+			return Vector3.zero;
 		}
 	}
 
-	public Vector3 Velocity {
-		get {
-			return Speed * DirectionVector;
-		}
-	}
 
 	public Player (Properties props) {
 		Speed = props.speed;
 		Courage = props.courage;
+		Kills = props.kills;
+		Level = props.level;
+		Gold = props.gold;
 		CurrentDirection = props.direction;
 	}
 
