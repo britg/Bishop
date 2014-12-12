@@ -8,22 +8,32 @@ public class PlayerController : GameController {
 	public Player player;
 	public Player.Properties playerInitialization;
 
-	Player.Direction nextDirection = Player.Direction.Stop;
+	Player.Direction nextDirection;
 	bool nextWaypointSet = false;
 	Vector3 nextWaypoint = Vector3.zero;
 
+	bool canMove = false;
+
 	void Awake () {
 		player = new Player(playerInitialization);
+		nextDirection = player.CurrentDirection;
+		Invoke ("EnableMovement", 1f);
 	}
 
 	void Update () {
 		HandleDirectionChange();
-		MovePlayer();
+		if (canMove) {
+			MovePlayer();
+		}
 	}
 
 	void MovePlayer () {
 		ChooseNextWaypoint();
 		transform.position += player.Velocity * Time.deltaTime;
+	}
+
+	void EnableMovement () {
+		canMove = true;
 	}
 
 	void HandleDirectionChange () {

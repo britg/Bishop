@@ -6,6 +6,8 @@ public class Player : GameModel {
 	[System.Serializable]
 	public class Properties {
 		public float speed;
+		public float courage;
+		public Direction direction;
 	}
 
 	public enum Direction {
@@ -17,6 +19,7 @@ public class Player : GameModel {
 	}
 
 	public float Speed { get; set; }
+	public float Courage { get; set; }
 	public Direction CurrentDirection { get; set; }
 
 	public Vector3 DirectionVector {
@@ -49,7 +52,8 @@ public class Player : GameModel {
 
 	public Player (Properties props) {
 		Speed = props.speed;
-		CurrentDirection = Direction.Stop;
+		Courage = props.courage;
+		CurrentDirection = props.direction;
 	}
 
 }
