@@ -21,6 +21,7 @@ public class PlayerController : GameController {
 	}
 
 	void Update () {
+		CheckDead();
 		HandleDirectionChange();
 		if (canMove) {
 			MovePlayer();
@@ -34,6 +35,10 @@ public class PlayerController : GameController {
 
 	void EnableMovement () {
 		canMove = true;
+	}
+
+	void DisableMovement () {
+		canMove = false;
 	}
 
 	void HandleDirectionChange () {
@@ -82,6 +87,12 @@ public class PlayerController : GameController {
 			}
 		}
 		return true;
+	}
+
+	void CheckDead () {
+		if (player.Dead) {
+			DisableMovement();
+		}
 	}
 
 }

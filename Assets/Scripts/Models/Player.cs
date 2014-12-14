@@ -22,6 +22,7 @@ public class Player : GameModel {
 		Stop
 	}
 
+	public bool		Dead { get; set; }
 	public float 	Speed { get; set; }
 	public float 	Courage { get; set; }
 	public int 	 	Level { get; set; }
@@ -54,6 +55,7 @@ public class Player : GameModel {
 
 
 	public Player (Properties props) {
+		Dead = false;
 		Speed = props.speed;
 		Courage = props.courage;
 		Kills = props.kills;
