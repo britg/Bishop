@@ -31,9 +31,9 @@ public class BodyController : GameController {
 	}
 
 	void DetectEnemy (GameObject go) {
-		var enemyController = go.GetComponent<EnemyController>();
-		if (enemyController != null) {
-			var service = new EnemyCollisionService(player, enemyController.enemy);
+		if (go.tag == "Enemy") {
+			var enemy = go.transform.parent.GetComponent<EnemyController>().enemy;
+			var service = new EnemyCollisionService(player, enemy);
 			service.Collide();
 		}
 	}

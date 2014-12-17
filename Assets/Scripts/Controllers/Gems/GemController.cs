@@ -17,11 +17,11 @@ public class GemController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		Debug.Log ("Collided with " + collider.gameObject);
+//		Debug.Log ("Collided with " + collider.gameObject);
 
 	}
 
 	void OnCollisionEnter (Collision collision) {
-		Debug.Log ("Collision " + collision.gameObject);
+//		Debug.Log ("Collision " + collision.gameObject);
 	}
 }

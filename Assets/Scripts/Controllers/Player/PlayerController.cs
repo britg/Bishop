@@ -8,7 +8,7 @@ public class PlayerController : GameController {
 	public Player player;
 	public Player.Properties playerInitialization;
 
-	Player.Direction nextDirection;
+	Agent.Direction nextDirection;
 	bool nextWaypointSet = false;
 	Vector3 nextWaypoint = Vector3.zero;
 	float currentMoveDistance = 0f;
@@ -45,11 +45,9 @@ public class PlayerController : GameController {
 
 	void MovePlayer () {
 		Vector3 frameMove = player.Velocity * Time.deltaTime;
-		float frameMagnitude = player.Speed * Time.deltaTime;
+		float frameMagnitude = player.CurrentSpeed * Time.deltaTime;
 		float nextMoveDistance = currentMoveDistance + frameMagnitude;
 		if (nextMoveDistance > waypointDistance) {
-			float remaining = waypointDistance - currentMoveDistance;
-			float pct = remaining / waypointDistance;
 			currentMoveDistance = waypointDistance;
 			transform.position = nextWaypoint;
 		} else {
