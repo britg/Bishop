@@ -19,13 +19,18 @@ public class WanderController : GameController {
 	// Update is called once per frame
 	void Update () {
 		if (Agent.CurrentStateWandering) {
+
+			if (!nextWaypointSet) {
+				nextWaypoint = transform.position + Agent.DirectionVector;
+				nextDirection = Agent.CurrentDirection;
+				nextWaypointSet = true;
+			}
+
 			Wander();
 		}
 	}
 
 	void Wander () {
-		transform.position += Agent.Velocity * Time.deltaTime;
-
 		Vector3 frameMove = Agent.Velocity * Time.deltaTime;
 		float frameMagnitude = Agent.CurrentSpeed * Time.deltaTime;
 		float nextMoveDistance = currentMoveDistance + frameMagnitude;
@@ -41,18 +46,13 @@ public class WanderController : GameController {
 	}
 
 	void ChooseNextWaypoint () {
-		if (!nextWaypointSet) {
-			nextWaypoint = transform.position + Agent.DirectionVector;
-			nextWaypointSet = true;
-		}
-		
 		if (AtWaypoint()) {
 			currentMoveDistance = 0f;
-//			RandomizeNextDirection();
 			Agent.CurrentDirection = nextDirection;
 			nextWaypoint = transform.position + Agent.DirectionVector;
-			
+
 			if (!WaypointValid(nextWaypoint)) {
+				RandomizeNextDirection();
 				Agent.CurrentDirection = Agent.Direction.Stop;
 			}
 		}

@@ -30,24 +30,28 @@ public class Agent : GameModel {
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
 	public Vector3 DirectionVector {
 		get {
-			if (CurrentDirection == Agent.Direction.Up) {
-				return Vector3.forward;
-			}
-			if (CurrentDirection == Agent.Direction.Right) {
-				return Vector3.right;
-			}
-			if (CurrentDirection == Agent.Direction.Left) {
-				return Vector3.left;
-			}
-			if (CurrentDirection == Agent.Direction.Down) {
-				return Vector3.back;
-			}
-			if (CurrentDirection == Agent.Direction.Stop) {
-				return Vector3.zero;
-			}
-			
+			return Vector(CurrentDirection);
+		}
+	}
+
+	public Vector3 Vector (Agent.Direction dir) {
+		if (dir == Agent.Direction.Up) {
+			return Vector3.forward;
+		}
+		if (dir == Agent.Direction.Right) {
+			return Vector3.right;
+		}
+		if (dir == Agent.Direction.Left) {
+			return Vector3.left;
+		}
+		if (dir == Agent.Direction.Down) {
+			return Vector3.back;
+		}
+		if (dir == Agent.Direction.Stop) {
 			return Vector3.zero;
 		}
+		
+		return Vector3.zero;
 	}
 
 	public void EnterState (Enemy.State newState) {

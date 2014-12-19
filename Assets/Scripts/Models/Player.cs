@@ -18,6 +18,9 @@ public class Player : Agent {
 	public int 	 	Kills { get; set; }
 	public int 		Gold { get; set; }
 
+	// Player Input
+	public Agent.Direction NextDirection;
+
 	public Player (Properties props) {
 		Dead = false;
 		Courage = props.courage;
