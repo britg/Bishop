@@ -19,6 +19,7 @@ public class BodyController : GameController {
 		Debug.Log ("Collided with " + collider.gameObject);
 		DetectGem(collider.gameObject);
 		DetectEnemy(collider.gameObject);
+		DetectInstantDeath(collider.gameObject);
 	}
 
 	void DetectGem (GameObject go) {
@@ -34,6 +35,13 @@ public class BodyController : GameController {
 		if (go.tag == "Enemy") {
 			var enemy = go.transform.parent.GetComponent<EnemyController>().enemy;
 			var service = new EnemyCollisionService(player, enemy);
+			service.Collide();
+		}
+	}
+
+	void DetectInstantDeath (GameObject go) {
+		if (go.tag == "InstantDeath") {
+			var service = new InstantDeathService(player, go);
 			service.Collide();
 		}
 	}
