@@ -32,19 +32,19 @@ public class TouchInputController : GameController {
 	void HandleDirectionChange () {
 		TouchDirection();
 		if (InputUp()) {
-			player.NextDirection = Player.Direction.Up;
+			player.QueueNextDirection(Player.Direction.Up);
 			return;
 		}
 		if (InputDown()) {
-			player.NextDirection = Player.Direction.Down;
+			player.QueueNextDirection(Player.Direction.Down);
 			return;
 		}
 		if (InputLeft()) {
-			player.NextDirection = Player.Direction.Left;
+			player.QueueNextDirection(Player.Direction.Left);
 			return;
 		}
 		if (InputRight()) {
-			player.NextDirection = Player.Direction.Right;
+			player.QueueNextDirection(Player.Direction.Right);
 			return;
 		}
 	}

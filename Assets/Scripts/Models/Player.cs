@@ -33,4 +33,12 @@ public class Player : Agent {
 		EnterState(Agent.State.Controlled);
 	}
 
+	public void QueueNextDirection (Direction next) {
+		if (isOppositeDirection(CurrentDirection, next)) {
+//			CurrentDirection = next;
+		} 
+
+		NextDirection = next;
+	}
+
 }

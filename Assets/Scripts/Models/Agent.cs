@@ -101,4 +101,24 @@ public class Agent : GameModel {
 		}
 	}
 
+	protected bool isOppositeDirection (Direction one, Direction other) {
+		if (other == Direction.Up) {
+			return (one == Direction.Down);
+		}
+		
+		if (other == Direction.Right) {
+			return (one == Direction.Left);
+		}
+		
+		if (other == Direction.Down) {
+			return (one == Direction.Up);
+		}
+		
+		if (other == Direction.Left) {
+			return (one == Direction.Right);
+		}
+		return false;
+	}
+
+
 }

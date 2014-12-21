@@ -44,12 +44,13 @@ public class PlayerController : GameController {
 	}
 
 	void MovePlayer () {
+
 		Vector3 frameMove = player.Velocity * Time.deltaTime;
 		float frameMagnitude = player.CurrentSpeed * Time.deltaTime;
 		float nextMoveDistance = currentMoveDistance + frameMagnitude;
-		if (nextMoveDistance > waypointDistance) {
-			currentMoveDistance = waypointDistance;
-			transform.position = NextWaypoint;
+
+		if (MovedPastWaypoint(nextMoveDistance)) {
+			SnapToNextWaypoint();
 		} else {
 			currentMoveDistance += frameMagnitude;
 			transform.position += frameMove;
@@ -59,6 +60,15 @@ public class PlayerController : GameController {
 			currentMoveDistance = 0f;
 			ChooseNextWaypoint();
 		}
+	}
+
+	void SnapToNextWaypoint () {
+		currentMoveDistance = waypointDistance;
+		transform.position = NextWaypoint;
+	}
+
+	bool MovedPastWaypoint (float nextMoveDistance) {
+		return nextMoveDistance > waypointDistance;
 	}
 
 	void EnableMovement () {
