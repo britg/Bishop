@@ -30,7 +30,7 @@ public class PlayerController : GameController {
 	bool canMove = false;
 
 	void Awake () {
-		player = new Player(playerInitialization);
+		player = new Player(playerInitialization, gameObject);
 		player.NextDirection = player.CurrentDirection;
 		Invoke ("EnableMovement", 1f);
 	}

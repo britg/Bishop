@@ -11,6 +11,7 @@ public class Agent : GameModel {
 		Controlled
 	}
 
+	public GameObject go;
 	public int Level { get; set; }
 	public float Courage { get; set; }
 	public float WanderSpeed { get; set; }

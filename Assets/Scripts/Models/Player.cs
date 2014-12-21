@@ -21,7 +21,8 @@ public class Player : Agent {
 	// Player Input
 	public Agent.Direction NextDirection;
 
-	public Player (Properties props) {
+	public Player (Properties props, GameObject _go) {
+		go = _go;
 		Dead = false;
 		Courage = props.courage;
 		Kills = props.kills;
