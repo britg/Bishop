@@ -10,6 +10,8 @@ public class Player : Agent {
 		public int level;
 		public int kills;
 		public int gold;
+		public int swords;
+		public int hearts;
 
 		public Direction direction;
 	}
@@ -18,6 +20,8 @@ public class Player : Agent {
 	public int 	 	Kills { get; set; }
 	public int 		Gold { get; set; }
 	public float 	Accel { get; set; }
+	public int 		Swords { get; set; }
+	public int 		Hearts { get; set; }
 
 	// Player Input
 

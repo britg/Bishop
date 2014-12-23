@@ -7,4 +7,6 @@ public class ItemReferences : GameController {
 	public GameObject goldPrefab;
 
 	public GameObject enemyPrefab;
+
+	public GameObject swordPrefab;
 }

@@ -12,7 +12,6 @@ public class EnemyCollisionService {
 	}
 
 	public void Collide () {
-		Debug.Log ("Collided with enemy");
 		player.Dead = true;
 	}
 }

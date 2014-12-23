@@ -16,8 +16,10 @@ public class BodyController : GameController {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		Debug.Log ("Collided with " + collider.gameObject);
 		DetectGem(collider.gameObject);
+		DetectSword(collider.gameObject);
+		DetectHeart(collider.gameObject);
+		DetectKey(collider.gameObject);
 		DetectEnemy(collider.gameObject);
 		DetectInstantDeath(collider.gameObject);
 	}
@@ -29,6 +31,18 @@ public class BodyController : GameController {
 			service.Pickup();
 			Destroy(go);
 		}
+	}
+
+	void DetectSword (GameObject go) {
+
+	}
+
+	void DetectHeart (GameObject go) {
+
+	}
+
+	void DetectKey (GameObject go) {
+
 	}
 
 	void DetectEnemy (GameObject go) {
