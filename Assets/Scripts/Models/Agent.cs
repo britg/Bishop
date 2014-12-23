@@ -29,9 +29,23 @@ public class Agent : GameModel {
 	public float CurrentSpeed { get; set; }
 	public Direction CurrentDirection { get; set; }
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
+
+	public Vector3 CurrentPosition {
+		get {
+			return go.transform.position;
+		}
+	}
+
 	public Vector3 DirectionVector {
 		get {
 			return Vector(CurrentDirection);
+		}
+	}
+
+	public Agent.Direction NextDirection;
+	public Vector3 NextVelocity {
+		get {
+			return Vector(NextDirection) * CurrentSpeed;
 		}
 	}
 
@@ -117,6 +131,7 @@ public class Agent : GameModel {
 		if (other == Direction.Left) {
 			return (one == Direction.Right);
 		}
+
 		return false;
 	}
 

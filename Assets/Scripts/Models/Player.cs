@@ -17,9 +17,9 @@ public class Player : Agent {
 	public bool		Dead { get; set; }
 	public int 	 	Kills { get; set; }
 	public int 		Gold { get; set; }
+	public float 	Accel { get; set; }
 
 	// Player Input
-	public Agent.Direction NextDirection;
 
 	public Player (Properties props, GameObject _go) {
 		go = _go;
@@ -34,8 +34,8 @@ public class Player : Agent {
 	}
 
 	public void QueueNextDirection (Direction next) {
-		if (isOppositeDirection(CurrentDirection, next)) {
-//			CurrentDirection = next;
+		if (CurrentDirection == Direction.Stop || isOppositeDirection(CurrentDirection, next)) {
+			CurrentDirection = next;
 		} 
 
 		NextDirection = next;
