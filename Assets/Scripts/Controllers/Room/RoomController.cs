@@ -41,7 +41,7 @@ public class RoomController : GameController {
 
 	void FillSpot (Vector3 spot) {
 		if (SpotFree(spot)) {
-			Instantiate(goldPrefab, spot, Quaternion.identity);
+			Instantiate(goldPrefab, spot, goldPrefab.transform.rotation);
 			freeSpots.Add(spot);
 		}
 	}
