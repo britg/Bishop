@@ -12,6 +12,7 @@ public class Player : Agent {
 		public int gold;
 		public int swords;
 		public int hearts;
+		public int keys;
 
 		public Direction direction;
 	}
@@ -22,6 +23,7 @@ public class Player : Agent {
 	public float 	Accel { get; set; }
 	public int 		Swords { get; set; }
 	public int 		Hearts { get; set; }
+	public int 		Keys { get; set; }
 
 	// Player Input
 
@@ -34,6 +36,9 @@ public class Player : Agent {
 		Gold = props.gold;
 		CurrentDirection = props.direction;
 		CurrentSpeed = props.speed;
+		Swords = props.swords;
+		Hearts = props.hearts;
+		Keys = props.keys;
 		EnterState(Agent.State.Controlled);
 	}
 

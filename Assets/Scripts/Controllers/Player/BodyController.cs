@@ -22,6 +22,7 @@ public class BodyController : GameController {
 		DetectKey(collider.gameObject);
 		DetectEnemy(collider.gameObject);
 		DetectInstantDeath(collider.gameObject);
+		DetectDoor(collider.gameObject);
 	}
 
 	void DetectGem (GameObject go) {
@@ -42,7 +43,10 @@ public class BodyController : GameController {
 	}
 
 	void DetectKey (GameObject go) {
-
+		if (go.name == "Key") {
+			player.Keys += 1;
+			Destroy(go);
+		}
 	}
 
 	void DetectEnemy (GameObject go) {
@@ -57,6 +61,15 @@ public class BodyController : GameController {
 		if (go.tag == "InstantDeath") {
 			var service = new InstantDeathService(player, go);
 			service.Collide();
+		}
+	}
+
+	void DetectDoor (GameObject go) {
+		if (go.name == "Door Trigger") {
+			if (player.Keys > 0) {
+				player.Keys -= 1;
+				Destroy(go.transform.parent.gameObject);
+			}
 		}
 	}
 
