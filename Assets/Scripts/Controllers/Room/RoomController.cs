@@ -8,6 +8,7 @@ public class RoomController : GameController {
 
 	GameObject goldPrefab;
 	GameObject enemyPrefab;
+	GameObject swordPrefab;
 	GameObject keyPrefab;
 	GameObject doorPrefab;
 
@@ -24,6 +25,7 @@ public class RoomController : GameController {
 	void Start () {
 		goldPrefab = ItemReferences.goldPrefab;
 		enemyPrefab = ItemReferences.enemyPrefab;
+		swordPrefab = ItemReferences.swordPrefab;
 		keyPrefab = ItemReferences.keyPrefab;
 		doorPrefab = ItemReferences.doorPrefab;
 
@@ -35,6 +37,7 @@ public class RoomController : GameController {
 			PlaceDoor();
 		}
 
+		PlaceSwords(room.swordCount);
 		FillGold();
 		PlaceEnemies();
 	}
@@ -119,5 +122,18 @@ public class RoomController : GameController {
 	void PlaceEnemy (Vector3 pos) {
 		var enemy = (GameObject)Instantiate(enemyPrefab, pos, Quaternion.identity);
 		enemy.transform.SetParent(transform);
+	}
+
+	void PlaceSwords (int count) {
+		for (var i = 0; i < count; i++) {
+			PlaceSword(RandomSpot());
+		}
+	}
+
+	void PlaceSword (Vector3 pos) {
+		var sword = (GameObject)Instantiate(swordPrefab, pos, swordPrefab.transform.rotation);
+		sword.name = "Sword";
+		sword.transform.SetParent(transform);
+		freeSpots.Remove(pos);
 	}
 }

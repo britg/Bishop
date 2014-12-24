@@ -10,7 +10,7 @@ public class EnemyController : GameController {
 	// Use this for initialization
 	void Start () {
 		enemy = new Enemy(enemyInitialization);
-
+		enemy.go = gameObject;
 		SetAgents();
 	}
 

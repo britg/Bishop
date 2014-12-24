@@ -13,6 +13,6 @@ public class Room : GameModel {
 	public Vector3 dimensions; // default dimensions: (15, 0, 30)
 
 	public int enemyCount;
-	public int enemyLevel;
+	public int swordCount;
 
 }

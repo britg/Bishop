@@ -35,7 +35,10 @@ public class BodyController : GameController {
 	}
 
 	void DetectSword (GameObject go) {
-
+		if (go.name == "Sword") {
+			player.Swords += 1;
+			Destroy(go);
+		}
 	}
 
 	void DetectHeart (GameObject go) {

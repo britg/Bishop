@@ -12,6 +12,11 @@ public class EnemyCollisionService {
 	}
 
 	public void Collide () {
-		player.Dead = true;
+		if (player.Swords < 1) {
+			player.Dead = true;
+		} else {
+			player.Swords -= 1;
+			GameObject.Destroy(enemy.go);
+		}
 	}
 }

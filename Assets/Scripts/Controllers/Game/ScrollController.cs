@@ -35,7 +35,6 @@ public class ScrollController : GameController {
 	}
 
 	void Reset () {
-		Debug.Log("Resetting");
 		var pos = transform.position;
 		pos.x = 0f;
 		transform.position = pos;
