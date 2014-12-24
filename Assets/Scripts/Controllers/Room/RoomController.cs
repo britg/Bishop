@@ -154,11 +154,9 @@ public class RoomController : GameController {
 	}
 
 	void OnDestroy () {
+		if (ObjectPool == null) {
+			return;
+		}
 		ObjectPool.ReturnGold(goldFromPool);
-//		foreach (Transform child in transform) {
-//			if (child.gameObject.name == "Gold") {
-//				ObjectPool.ReturnGold(child.gameObject);
-//			}
-//		}
 	}
 }

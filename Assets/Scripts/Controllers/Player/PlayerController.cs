@@ -59,6 +59,8 @@ public class PlayerController : GameController {
 			AttemptTurnOrStop();
 //			StopPlayer();
 		}
+
+		FaceDirection();
 	}
 
 	void MovePlayer () {
@@ -147,6 +149,21 @@ public class PlayerController : GameController {
 
 	void Turn () {
 		player.CurrentDirection = player.NextDirection;
+	}
+
+	void FaceDirection () {
+		if (player.CurrentDirection == Player.Direction.Up) {
+			transform.eulerAngles = Vector3.zero;
+		}
+		if (player.CurrentDirection == Player.Direction.Right) {
+			transform.eulerAngles = new Vector3(0f, 90f, 0f);
+		}
+		if (player.CurrentDirection == Player.Direction.Down) {
+			transform.eulerAngles = new Vector3(0f, 180f, 0f);
+		}
+		if (player.CurrentDirection == Player.Direction.Left) {
+			transform.eulerAngles = new Vector3(0f, 270f, 0f);
+		}
 	}
 
 	void EnableMovement () {
