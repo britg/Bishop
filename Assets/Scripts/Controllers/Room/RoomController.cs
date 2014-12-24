@@ -29,6 +29,10 @@ public class RoomController : GameController {
 		keyPrefab = ItemReferences.keyPrefab;
 		doorPrefab = ItemReferences.doorPrefab;
 
+		Invoke ("Initialize", 1f);
+	}
+
+	void Initialize () {
 		freeSpots = new List<Vector3>();
 		Scan();
 

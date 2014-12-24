@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(WanderController))]
 public class EnemyController : GameController {
 
 	public Enemy enemy;
@@ -15,8 +14,8 @@ public class EnemyController : GameController {
 	}
 
 	void SetAgents () {
-		var wanderController = gameObject.GetComponent<WanderController>();
-		if (wanderController != null) {
+		if (enemy.Wanders) {
+			var wanderController = gameObject.AddComponent<WanderController>();
 			wanderController.Agent = enemy;
 		}
 	}
