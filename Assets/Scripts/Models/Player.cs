@@ -17,6 +17,8 @@ public class Player : Agent {
 		public Direction direction;
 	}
 
+	public int		Points { get; set; }
+	public int 		HighScore { get; set; }
 	public bool		Dead { get; set; }
 	public int 	 	Kills { get; set; }
 	public int 		Gold { get; set; }
@@ -40,6 +42,8 @@ public class Player : Agent {
 		Hearts = props.hearts;
 		Keys = props.keys;
 		EnterState(Agent.State.Controlled);
+
+		Load();
 	}
 
 	public void QueueNextDirection (Direction next) {
@@ -48,6 +52,33 @@ public class Player : Agent {
 		} 
 
 		NextDirection = next;
+	}
+
+	public void Save () {
+		ES2.Save(Gold, "gold");
+
+		if (ES2.Exists ("points")) {
+			CheckNewRecord();
+		} else {
+			ES2.Save(Points, "points");
+		}
+	}
+
+	public void Load () {
+		if (ES2.Exists("gold")) {
+			Gold = ES2.Load<int>("gold");
+		}
+
+		if (ES2.Exists("points")) {
+			HighScore = ES2.Load<int>("points");
+		}
+	}
+
+	void CheckNewRecord () {
+		int prevRecord = ES2.Load<int>("points");
+		if (Points > prevRecord) {
+			ES2.Save(Points, "points");
+		}
 	}
 
 }

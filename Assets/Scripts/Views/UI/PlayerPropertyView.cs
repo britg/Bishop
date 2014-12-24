@@ -7,7 +7,11 @@ public class PlayerPropertyView : GameBehaviour {
 	public enum Property {
 		Courage,
 		Level,
-		Gold
+		Gold,
+		Points,
+		Swords,
+		Hearts,
+		HighScore
 	}
 
 	Player player;
@@ -25,8 +29,6 @@ public class PlayerPropertyView : GameBehaviour {
 		UpdateProperty();
 	}
 
-
-
 	void UpdateProperty () {
 		if (textView == null) {
 			return;
@@ -38,6 +40,14 @@ public class PlayerPropertyView : GameBehaviour {
 			textView.text = string.Format("{0}", player.Level);
 		} else if (propertyToWatch == Property.Gold) {
 			textView.text = string.Format("{0}", player.Gold);
+		} else if (propertyToWatch == Property.Points) {
+			textView.text = string.Format("{0}", player.Points);
+		} else if (propertyToWatch == Property.Swords) {
+			textView.text = string.Format("{0}", player.Swords);
+		} else if (propertyToWatch == Property.Hearts) {
+			textView.text = string.Format("{0}", player.Hearts);
+		} else if (propertyToWatch == Property.HighScore) {
+			textView.text = string.Format("{0}", player.HighScore);
 		}
 
 	}

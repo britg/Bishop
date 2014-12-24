@@ -188,6 +188,7 @@ public class PlayerController : GameController {
 
 	void CheckDead () {
 		if (player.Dead) {
+			player.Save();
 			DisableMovement();
 		}
 	}

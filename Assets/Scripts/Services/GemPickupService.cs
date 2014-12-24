@@ -12,8 +12,7 @@ public class GemPickupService {
 	}
 
 	public void Pickup () {
-		player.Gold += gem.GoldValue;
-		player.Courage += 1;
+		player.Points += 1;
 	}
 
 }
