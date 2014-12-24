@@ -41,6 +41,9 @@ public class PlayerController : GameController {
 	}
 
 	void Update () {
+		if (Paused) {
+			return;
+		}
 		CheckDead();
 		LockLane();
 

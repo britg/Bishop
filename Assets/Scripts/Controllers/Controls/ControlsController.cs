@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ControlsController : MonoBehaviour {
+public class ControlsController : GameController {
 
 	public GameObject menuPanel;
 

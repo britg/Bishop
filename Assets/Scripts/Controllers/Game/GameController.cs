@@ -39,4 +39,26 @@ public class GameController : GameBehaviour {
 		}
 	}
 
+	PauseController pauseController;
+	public PauseController PauseController {
+		get {
+			if (GameRef == null) {
+				return null;
+			}
+			if (pauseController == null) {
+				pauseController = GameRef.GetComponent<PauseController>();
+			}
+			return pauseController;
+
+		}
+	}
+	public bool Paused {
+		get {
+			if (GameRef == null) {
+				return true;
+			}
+			return PauseController.Paused;
+		}
+	}
+
 }

@@ -5,8 +5,6 @@ public class ScrollController : GameController {
 
 //	Player player;
 
-	public float resetDistance = 30f;
-
 	public Vector3 scrollSpeed;
 	public Vector3 scrollAccel;
 	public Vector3 maxSpeed;
@@ -18,6 +16,9 @@ public class ScrollController : GameController {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Paused) {
+			return;
+		}
 		MoveFrame();
 	}
 

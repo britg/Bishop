@@ -18,6 +18,10 @@ public class WanderController : GameController {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Paused) {
+			return;
+		}
+
 		if (Agent.CurrentStateWandering) {
 
 			if (!nextWaypointSet) {
