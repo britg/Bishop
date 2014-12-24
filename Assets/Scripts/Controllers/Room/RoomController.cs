@@ -13,7 +13,7 @@ public class RoomController : GameController {
 	GameObject doorPrefab;
 
 	List<Vector3> freeSpots;
-	int enemiesSpawned = 0;
+	List<GameObject> goldFromPool;
 
 	Vector3 RoomPosition {
 		get {
@@ -100,8 +100,13 @@ public class RoomController : GameController {
 	}
 
 	void FillGold() {
-		foreach(var pos in freeSpots) {
-			PlaceGold(pos);
+		goldFromPool = ObjectPool.GetGoldAmount(freeSpots.Count);
+
+		for(int i = 0; i < freeSpots.Count; i++) {
+			var pos = freeSpots[i];
+			var gold = goldFromPool[i];
+//			PlaceGold(pos);
+			ActivateGold(pos, gold);
 		}
 	}
 
@@ -120,7 +125,14 @@ public class RoomController : GameController {
 
 	void PlaceGold (Vector3 pos) {
 		var gold = (GameObject)Instantiate(goldPrefab, pos, goldPrefab.transform.rotation);
+		gold.name = "Gold";
 		gold.transform.SetParent(transform);
+	}
+
+	void ActivateGold (Vector3 pos, GameObject goldObj) {
+		goldObj.transform.position = pos;
+//		goldObj.transform.SetParent(transform);
+		goldObj.SetActive(true);
 	}
 
 	void PlaceEnemy (Vector3 pos) {
@@ -139,5 +151,14 @@ public class RoomController : GameController {
 		sword.name = "Sword";
 		sword.transform.SetParent(transform);
 		freeSpots.Remove(pos);
+	}
+
+	void OnDestroy () {
+		ObjectPool.ReturnGold(goldFromPool);
+//		foreach (Transform child in transform) {
+//			if (child.gameObject.name == "Gold") {
+//				ObjectPool.ReturnGold(child.gameObject);
+//			}
+//		}
 	}
 }

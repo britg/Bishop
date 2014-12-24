@@ -12,7 +12,6 @@ public class PlayerController : GameController {
 	public float collisionDistance = 0.5f;
 	public float collisionRadius = 0.5f;
 
-	float currentMoveDistance = 0f;
 	float waypointDistance = 1f;
 
 	bool nextWaypointInitialized = false;
@@ -90,7 +89,6 @@ public class PlayerController : GameController {
 	}
 
 	void SnapToNextWaypoint () {
-		currentMoveDistance = waypointDistance;
 		transform.position = NextWaypoint;
 	}
 

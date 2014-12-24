@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ScrollController : GameController {
 
-	Player player;
+//	Player player;
 
 	public float resetDistance = 30f;
 
@@ -13,31 +13,21 @@ public class ScrollController : GameController {
 
 	// Use this for initialization
 	void Start () {
-		player = GetPlayer();
+//		player = GetPlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		MoveFrame();
-		EnsureNextRoom();
 	}
 
 	void MoveFrame () {
 		Vector3 frameMove = scrollSpeed * Time.deltaTime;
 		transform.position += frameMove;
-		scrollSpeed += scrollAccel * Time.deltaTime;
-	}
 
-	void EnsureNextRoom () {
-		if (transform.position.x >= resetDistance) {
-			Reset();
+		if (scrollSpeed.z < maxSpeed.z) {
+			scrollSpeed += scrollAccel * Time.deltaTime;
 		}
-	}
-
-	void Reset () {
-		var pos = transform.position;
-		pos.x = 0f;
-		transform.position = pos;
 	}
 
 }

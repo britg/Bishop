@@ -8,11 +8,10 @@ public class InstantDeathService {
 	
 	public InstantDeathService (Player _player, GameObject _obj) {
 		player = _player;
-		obj = _obj;
+//		obj = _obj;
 	}
 	
 	public void Collide () {
-		Debug.Log ("InstantDeath!");
 		player.Dead = true;
 	}
 }

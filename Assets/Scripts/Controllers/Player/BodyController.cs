@@ -30,7 +30,7 @@ public class BodyController : GameController {
 		if (gemController != null) {
 			var service = new GemPickupService(player, gemController.gem);
 			service.Pickup();
-			Destroy(go);
+			ObjectPool.ReturnGold(go);
 		}
 	}
 
