@@ -13,7 +13,12 @@ public class EnemyCollisionService {
 
 	public void Collide () {
 		if (player.Swords < 1) {
-			player.Dead = true;
+			if (player.Hearts <= 1) {
+				player.Hearts = 0;
+				player.Dead = true;
+			} else {
+				player.Hearts -= 1;
+			}
 		} else {
 			player.Swords -= 1;
 			GameObject.Destroy(enemy.go);
