@@ -29,7 +29,7 @@ public class RoomController : GameController {
 		keyPrefab = ItemReferences.keyPrefab;
 		doorPrefab = ItemReferences.doorPrefab;
 
-		Invoke ("Initialize", 1f);
+		Invoke ("Initialize", 0.1f);
 	}
 
 	void Initialize () {

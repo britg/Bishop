@@ -11,7 +11,8 @@ public class PlayerPropertyView : GameBehaviour {
 		Points,
 		Swords,
 		Hearts,
-		HighScore
+		HighScore,
+		Keys
 	}
 
 	Player player;
@@ -48,6 +49,8 @@ public class PlayerPropertyView : GameBehaviour {
 			textView.text = string.Format("{0}", player.Hearts);
 		} else if (propertyToWatch == Property.HighScore) {
 			textView.text = string.Format("{0}", player.HighScore);
+		} else if (propertyToWatch == Property.Keys) {
+			textView.text = string.Format("{0}", player.Keys);
 		}
 
 	}

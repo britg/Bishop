@@ -26,9 +26,9 @@ public class BodyController : GameController {
 	}
 
 	void DetectGem (GameObject go) {
-		var gemController = go.GetComponent<GemController>();
+		var gemController = go.GetComponent<GoldController>();
 		if (gemController != null) {
-			var service = new GemPickupService(player, gemController.gem);
+			var service = new GoldPickupService(player, gemController.gem);
 			service.Pickup();
 			ObjectPool.ReturnGold(go);
 		}
