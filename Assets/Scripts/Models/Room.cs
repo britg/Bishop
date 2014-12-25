@@ -4,6 +4,9 @@ using System.Collections;
 [System.Serializable]
 public class Room : GameModel {
 
+	public static Bounds DEFAULT_BOUNDS = new Bounds(Vector3.zero, new Vector3(18f, 0, 31f));
+	public static Vector3 INSET = new Vector3(0f, 0f, 3f);
+
 	public enum Type {
 		Open,
 		Unlock
@@ -14,5 +17,18 @@ public class Room : GameModel {
 
 	public int enemyCount;
 	public int swordCount;
+
+	public Bounds bounds;
+
+	Bounds fillableBounds;
+	public Bounds FillableBounds {
+		get {
+			if (fillableBounds.size.x < 1f) {
+				Vector3 size = bounds.size - Room.INSET;
+				fillableBounds = new Bounds(Vector3.zero, size);
+			}
+			return fillableBounds;
+		}
+	}
 
 }

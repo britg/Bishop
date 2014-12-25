@@ -90,7 +90,9 @@ public class PlayerController : GameController {
 	}
 
 	void SpeedUp () {
-		player.CurrentSpeed += playerAccel * Time.deltaTime;
+		if (player.CurrentSpeed < player.MaxSpeed) {
+			player.CurrentSpeed += playerAccel * Time.deltaTime;
+		}
 	}
 
 	void SnapToNextWaypoint () {

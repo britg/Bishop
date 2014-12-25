@@ -6,6 +6,7 @@ public class Player : Agent {
 	[System.Serializable]
 	public class Properties {
 		public float speed;
+		public float maxSpeed;
 		public float courage;
 		public int level;
 		public int kills;
@@ -17,6 +18,7 @@ public class Player : Agent {
 		public Direction direction;
 	}
 
+	public float 	MaxSpeed { get; set; }
 	public int		Points { get; set; }
 	public int 		HighScore { get; set; }
 	public bool		Dead { get; set; }
@@ -38,6 +40,7 @@ public class Player : Agent {
 		Gold = props.gold;
 		CurrentDirection = props.direction;
 		CurrentSpeed = props.speed;
+		MaxSpeed = props.maxSpeed;
 		Swords = props.swords;
 		Hearts = props.hearts;
 		Keys = props.keys;

@@ -29,7 +29,7 @@ public class RoomController : GameController {
 		keyPrefab = ItemReferences.keyPrefab;
 		doorPrefab = ItemReferences.doorPrefab;
 
-		Invoke ("Initialize", 0.1f);
+		Invoke ("Initialize", 1f);
 	}
 
 	void Initialize () {
@@ -52,12 +52,8 @@ public class RoomController : GameController {
 	}
 
 	void Scan () {
-		var fillableX = room.dimensions.x / 2f - 0.5f;
-		var startZ = -1.5f;
-		var endZ = room.dimensions.z + startZ - 2f;
-
-		for (var x = -fillableX; x <= fillableX; x++) {
-			for (var z = startZ; z <= endZ; z++) {
+		for (var x = room.FillableBounds.min.x; x <= room.FillableBounds.max.x; x++) {
+			for (var z = room.FillableBounds.min.z; z <= room.FillableBounds.max.z; z++) {
 				var spot = new Vector3(x, 0f, z) + RoomPosition;
 				if (SpotFree(spot)) {
 					freeSpots.Add(spot);
@@ -95,7 +91,7 @@ public class RoomController : GameController {
 
 	void PlaceEnemies () {
 		for (int i = 0; i < room.enemyCount; i++) {
-			PlaceEnemy(RandomSpot((int)(7 + RoomPosition.z)));
+			PlaceEnemy(RandomSpot((int)(-7 + RoomPosition.z)));
 		}
 	}
 
@@ -118,7 +114,7 @@ public class RoomController : GameController {
 	}
 
 	void PlaceDoor () {
-		var pos = new Vector3(-1f, 0f, 28.5f) + RoomPosition;
+		var pos = new Vector3(-1f, 0f, 15.5f) + RoomPosition;
 		var door = (GameObject)Instantiate(doorPrefab, pos, doorPrefab.transform.rotation);
 		door.transform.SetParent(transform);
 	}
