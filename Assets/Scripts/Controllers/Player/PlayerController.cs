@@ -12,6 +12,8 @@ public class PlayerController : GameController {
 	public float collisionDistance = 0.5f;
 	public float collisionRadius = 0.5f;
 
+	public AudioSource footsteps;
+
 	float waypointDistance = 1f;
 
 	bool nextWaypointInitialized = false;
@@ -52,7 +54,12 @@ public class PlayerController : GameController {
 		}
 
 		if (player.CurrentDirection == Player.Direction.Stop) {
+			footsteps.Stop();
 			return;
+		} else {
+			if (!footsteps.isPlaying) {
+				footsteps.Play();
+			}
 		}
 
 		if (CanMove()) {
