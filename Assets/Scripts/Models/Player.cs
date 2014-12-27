@@ -34,6 +34,7 @@ public class Player : Agent {
 	public int 		Swords { get; set; }
 	public int 		SwordLevel { get; set; }
 	public int 		Hearts { get; set; }
+	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
 
 	// Player Input
@@ -49,7 +50,8 @@ public class Player : Agent {
 		CurrentSpeed = props.speed;
 		MaxSpeed = props.maxSpeed;
 		Swords = props.swords;
-		Hearts = props.hearts;
+		MaxHearts = props.hearts;
+		Hearts = MaxHearts;
 		Keys = props.keys;
 		EnterState(Agent.State.Controlled);
 
@@ -91,7 +93,7 @@ public class Player : Agent {
 	}
 
 	public void SaveHearts () {
-		ES2.Save(Hearts, HEARTS);
+		ES2.Save(MaxHearts, HEARTS);
 	}
 
 	public void Load () {
@@ -121,7 +123,7 @@ public class Player : Agent {
 
 	void LoadHearts () {
 		if (ES2.Exists(HEARTS)) {
-			Hearts = ES2.Load<int>(HEARTS);
+			MaxHearts = ES2.Load<int>(HEARTS);
 		}
 	}
 

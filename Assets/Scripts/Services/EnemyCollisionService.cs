@@ -12,16 +12,20 @@ public class EnemyCollisionService {
 	}
 
 	public void Collide () {
-		if (player.Swords < 1) {
+		if (PlayerSurvives()) {
+			player.Swords -= 1;
+			GameObject.Destroy(enemy.go);
+		} else {
 			if (player.Hearts <= 1) {
 				player.Hearts = 0;
 				player.Dead = true;
 			} else {
 				player.Hearts -= 1;
 			}
-		} else {
-			player.Swords -= 1;
-			GameObject.Destroy(enemy.go);
-		}
+		} 
+	}
+
+	public bool PlayerSurvives () {
+		return player.Swords > 0;
 	}
 }

@@ -18,7 +18,7 @@ public class MusicController : GameController{
 		}
 
 		if (Paused && music.isPlaying) {
-			music.Stop();
+			music.Pause();
 		}
 
 		if (!Paused && shouldPlayMusic && !music.isPlaying) {

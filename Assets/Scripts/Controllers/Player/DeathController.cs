@@ -8,18 +8,35 @@ public class DeathController : GameController {
 	public GameObject gameOverPanel;
 	public GameObject gameOverText;
 
+	public AudioSource diedSound;
+
 	void Start () {
 		player = GetPlayer();
 	}
 
+	bool inTransition = false;
 	void Update () {
 		if (Paused) {
 			return;
 		}
-		if (player.Dead) {
-			gameOverPanel.SetActive(true);
-			gameOverText.SetActive(true);
-			PauseController.Pause();
+		if (player.Dead && !inTransition) {
+			DoDeadTransition();
 		}
+	}
+
+	void DoDeadTransition () {
+		Pause();
+		inTransition = true;
+		diedSound.Play();
+		iTween.MoveTo (Camera.main.gameObject, iTween.Hash ("time", 1f,
+		                                                    "position", transform.position + new Vector3(0f, 5f, 0f),
+		               										"oncomplete", "ShowRestart",
+		               										"oncompletetarget", gameObject));
+	}
+
+	void ShowRestart () {
+		gameOverPanel.SetActive(true);
+		gameOverText.SetActive(true);
+		inTransition = false;
 	}
 }

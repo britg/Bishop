@@ -4,7 +4,17 @@ using System.Collections;
 public class BodyController : GameController {
 
 	Player player;
-	public AudioSource[] pickupSounds;
+	public AudioSource goldPickupSound;
+	public AudioSource swordPickupSound;
+	public AudioSource keyPickupSound;
+
+	public AudioSource attackSound;
+	public AudioSource unlockSound;
+
+	public GameObject playerGold;
+
+	public float gemPickupTime = 0.2f;
+	public float itemPickupTime = 0.3f;
 
 	// Use this for initialization
 	void Start () {
@@ -33,20 +43,43 @@ public class BodyController : GameController {
 			var service = new GoldPickupService(player, gemController.gem);
 			service.Pickup();
 			PlayPickup();
+			ShowGemPickup();
 			ObjectPool.ReturnGold(go);
 		}
 	}
 
 	void PlayPickup () {
-		var r = Random.Range(0, pickupSounds.Length);
-		var sound = pickupSounds[r];
-		sound.Play();
+		goldPickupSound.Play();
+	}
+
+	bool goldAnimating = false;
+	void ShowGemPickup () {
+		if (goldAnimating) {
+			return;
+		}
+		goldAnimating = true;
+		iTween.MoveBy (playerGold, iTween.Hash (
+			"islocal", true,
+			"y", 2f,
+			"time", gemPickupTime,
+			"oncomplete", "ResetGem",
+			"oncompletetarget", gameObject));
+		iTween.RotateBy (playerGold, iTween.Hash (
+			"islocal", true,
+			"y", 1f,
+			"time", gemPickupTime));
+	}
+
+	void ResetGem () {
+		goldAnimating = false;
+		playerGold.transform.localPosition = Vector3.zero;
 	}
 
 	void DetectSword (GameObject go) {
 		if (go.name == "Sword") {
 			player.Swords += 1;
 			Destroy(go);
+			swordPickupSound.Play();
 		}
 	}
 
@@ -58,6 +91,7 @@ public class BodyController : GameController {
 		if (go.name == "Key") {
 			player.Keys += 1;
 			Destroy(go);
+			keyPickupSound.Play();
 		}
 	}
 
@@ -65,8 +99,21 @@ public class BodyController : GameController {
 		if (go.tag == "Enemy") {
 			var enemy = go.transform.parent.GetComponent<EnemyController>().enemy;
 			var service = new EnemyCollisionService(player, enemy);
+			if (service.PlayerSurvives()) {
+				DoAttack();
+			}
 			service.Collide();
+
 		}
+	}
+
+	void DoAttack () {
+		attackSound.Play();
+		ShakeCamera();
+	}
+
+	void ShakeCamera () {
+		iTween.ShakePosition(Camera.main.gameObject, iTween.Hash ("time", 0.2f, "amount", new Vector3(1f, 1f, 1f)));
 	}
 
 	void DetectInstantDeath (GameObject go) {
