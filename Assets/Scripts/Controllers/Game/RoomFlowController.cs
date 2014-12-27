@@ -9,7 +9,7 @@ public class RoomFlowController : GameController {
 	public int minRoomCount = 2;
 	public float roomLength = 31f;
 
-	float currentZ;
+	public float currentZ;
 	List<GameObject> rooms;
 	GameObject[] roomPrefabs;
 
@@ -23,7 +23,6 @@ public class RoomFlowController : GameController {
 	void Start () {
 		roomPrefabs = Resources.LoadAll<GameObject>("Rooms");
 		GetRooms();
-		currentZ = 45f;
 	}
 	
 	// Update is called once per frame

@@ -5,6 +5,8 @@ public class ScrollController : GameController {
 
 //	Player player;
 
+	bool scrolling = false;
+
 	public Vector3 scrollSpeed;
 	public Vector3 scrollAccel;
 	public Vector3 maxSpeed;
@@ -19,7 +21,9 @@ public class ScrollController : GameController {
 		if (Paused) {
 			return;
 		}
-		MoveFrame();
+		if (scrolling) {
+			MoveFrame();
+		}
 	}
 
 	void MoveFrame () {

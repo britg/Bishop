@@ -115,13 +115,13 @@ public class Player : Agent {
 
 	void LoadSwordLevel () {
 		if (ES2.Exists(SWORDLEVEL)) {
-			HighScore = ES2.Load<int>(SWORDLEVEL);
+			SwordLevel = ES2.Load<int>(SWORDLEVEL);
 		}
 	}
 
 	void LoadHearts () {
 		if (ES2.Exists(HEARTS)) {
-			HighScore = ES2.Load<int>(HEARTS);
+			Hearts = ES2.Load<int>(HEARTS);
 		}
 	}
 

@@ -4,6 +4,7 @@ using System.Collections;
 public class BodyController : GameController {
 
 	Player player;
+	public AudioSource[] pickupSounds;
 
 	// Use this for initialization
 	void Start () {
@@ -30,8 +31,15 @@ public class BodyController : GameController {
 		if (gemController != null) {
 			var service = new GoldPickupService(player, gemController.gem);
 			service.Pickup();
+			PlayPickup();
 			ObjectPool.ReturnGold(go);
 		}
+	}
+
+	void PlayPickup () {
+		var r = Random.Range(0, pickupSounds.Length);
+		var sound = pickupSounds[r];
+		sound.Play();
 	}
 
 	void DetectSword (GameObject go) {
