@@ -13,6 +13,16 @@ public class GameController : GameBehaviour {
 		}
 	}
 
+	GameObject railRef;
+	public GameObject RailRef {
+		get {
+			if (railRef == null) {
+				railRef = GameObject.Find("Rail");
+			}
+			return railRef;
+		}
+	}
+
 	ItemReferences itemRef;
 	public ItemReferences ItemReferences {
 		get { 
@@ -58,6 +68,24 @@ public class GameController : GameBehaviour {
 				return true;
 			}
 			return PauseController.Paused;
+		}
+	}
+
+	public void Pause () {
+		PauseController.Pause();
+	}
+
+	public void Unpause () {
+		PauseController.Unpause();
+	}
+
+	ScrollController scrollingController;
+	public ScrollController ScrollingController {
+		get {
+			if (scrollingController == null) {
+				scrollingController = RailRef.GetComponent<ScrollController>();
+			}
+			return scrollingController;
 		}
 	}
 

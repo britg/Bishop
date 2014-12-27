@@ -3,27 +3,31 @@ using System.Collections;
 
 public class ScrollController : GameController {
 
-//	Player player;
-
 	bool scrolling = false;
 
 	public Vector3 scrollSpeed;
 	public Vector3 scrollAccel;
 	public Vector3 maxSpeed;
+	public Vector3 scrollStart;
+	public float scrollToStartTime;
 
-	// Use this for initialization
+	public GameObject castleDoor;
+	public Vector3 castleDoorOpenPosition;
+	public float castleDoorOpenTime;
+	public AudioSource castleDoorSound;
+
+	public MusicController musicController;
+
 	void Start () {
-//		player = GetPlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Paused) {
+		if (Paused || !scrolling) {
 			return;
 		}
-		if (scrolling) {
-			MoveFrame();
-		}
+
+		MoveFrame();
 	}
 
 	void MoveFrame () {
@@ -33,6 +37,24 @@ public class ScrollController : GameController {
 		if (scrollSpeed.z < maxSpeed.z) {
 			scrollSpeed += scrollAccel * Time.deltaTime;
 		}
+	}
+
+	public void TransitionToCastle () {
+		Pause();
+		iTween.MoveTo(gameObject, iTween.Hash ("position", scrollStart,
+		                                       "time", scrollToStartTime));
+
+		iTween.MoveTo(castleDoor, iTween.Hash ("position", castleDoorOpenPosition,
+		                                       "time", castleDoorOpenTime,
+		                                       "oncomplete", "TransitionDone",
+		                                       "oncompletetarget", gameObject));
+		castleDoorSound.Play();
+	}
+
+	void TransitionDone () {
+		Unpause();
+		musicController.shouldPlayMusic = true;
+		scrolling = true;
 	}
 
 }

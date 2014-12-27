@@ -44,6 +44,9 @@ public class PlayerController : GameController {
 
 	void Update () {
 		if (Paused) {
+			if (footsteps.isPlaying) {
+				footsteps.Stop();
+			}
 			return;
 		}
 		CheckDead();

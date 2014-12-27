@@ -24,6 +24,7 @@ public class BodyController : GameController {
 		DetectEnemy(collider.gameObject);
 		DetectInstantDeath(collider.gameObject);
 		DetectDoor(collider.gameObject);
+		DetectCastle(collider.gameObject);
 	}
 
 	void DetectGem (GameObject go) {
@@ -81,6 +82,12 @@ public class BodyController : GameController {
 				player.Keys -= 1;
 				Destroy(go.transform.parent.gameObject);
 			}
+		}
+	}
+
+	void DetectCastle (GameObject go) {
+		if (go.name == "Castle Door Trigger") {
+			ScrollingController.TransitionToCastle();
 		}
 	}
 

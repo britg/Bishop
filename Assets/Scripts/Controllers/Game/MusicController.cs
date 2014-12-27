@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MusicController : GameController{
 
+	public bool shouldPlayMusic = false;
 	public AudioSource music;
 
 	// Use this for initialization
@@ -12,11 +13,15 @@ public class MusicController : GameController{
 	
 	// Update is called once per frame
 	void Update () {
+		if (music == null) {
+			return;
+		}
+
 		if (Paused && music.isPlaying) {
 			music.Stop();
 		}
 
-		if (!Paused && !music.isPlaying) {
+		if (!Paused && shouldPlayMusic && !music.isPlaying) {
 			music.Play();
 		}
 	}
