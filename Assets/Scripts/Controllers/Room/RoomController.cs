@@ -91,7 +91,7 @@ public class RoomController : GameController {
 
 	void PlaceEnemies () {
 		for (int i = 0; i < room.enemyCount; i++) {
-			PlaceEnemy(RandomSpot((int)(-7 + RoomPosition.z)));
+			PlaceEnemy(RandomSpot((int)(RoomPosition.z - room.bounds.extents.z)));
 		}
 	}
 
@@ -102,7 +102,9 @@ public class RoomController : GameController {
 			var pos = freeSpots[i];
 			var gold = goldFromPool[i];
 //			PlaceGold(pos);
-			ActivateGold(pos, gold);
+			if (Mathf.FloorToInt(i / 10) % 10 == 0) {
+				ActivateGold(pos, gold);
+			}
 		}
 	}
 

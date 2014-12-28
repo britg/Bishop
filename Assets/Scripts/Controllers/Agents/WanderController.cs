@@ -78,10 +78,16 @@ public class WanderController : GameController {
 		float radius = 0.4f;
 		var hits = Physics.SphereCastAll(transform.position, radius, waypoint - transform.position, testDistance);
 		foreach (RaycastHit hit in hits) {
-			if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Walls")) {
+			if (Blocking(hit.collider.gameObject)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	bool Blocking (GameObject go) {
+		bool wall = go.layer == LayerMask.NameToLayer("Walls");
+		bool enemy = go.tag == "Enemy";
+		return wall || enemy;
 	}
 }
