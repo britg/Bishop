@@ -98,12 +98,30 @@ public class RoomController : GameController {
 	void FillGold() {
 		goldFromPool = ObjectPool.GetGoldAmount(freeSpots.Count);
 
+		bool inStream = false;
+		int streamCount = 0;
+		Vector3 pos;
+		GameObject gold;
+
 		for(int i = 0; i < freeSpots.Count; i++) {
-			var pos = freeSpots[i];
-			var gold = goldFromPool[i];
-//			PlaceGold(pos);
-			if (Mathf.FloorToInt(i / 10) % 10 == 0) {
+			pos = freeSpots[i];
+
+			if (!inStream) {
+				var r = Random.Range(0, 100);
+				if (r <= room.streamChance) {
+					inStream = true;
+					streamCount = 0;
+				}
+			}
+
+			if (inStream) {
+				gold = goldFromPool[i];
 				ActivateGold(pos, gold);
+				streamCount++;
+			}
+
+			if (streamCount > room.streamLength) {
+				inStream = false;
 			}
 		}
 	}

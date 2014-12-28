@@ -16,6 +16,7 @@ public class Player : Agent {
 		public int level;
 		public int kills;
 		public int gold;
+		public float comboHoldTime;
 		public int swords;
 		public int swordLevel;
 		public int hearts;
@@ -31,6 +32,8 @@ public class Player : Agent {
 	public int 	 	Kills { get; set; }
 	public int 		Gold { get; set; }
 	public float 	Accel { get; set; }
+	public int 		CurrentCombo { get; set; }
+	public float	ComboHoldTime { get; set; }
 	public int 		Swords { get; set; }
 	public int 		SwordLevel { get; set; }
 	public int 		Hearts { get; set; }
@@ -49,6 +52,8 @@ public class Player : Agent {
 		CurrentDirection = props.direction;
 		CurrentSpeed = props.speed;
 		MaxSpeed = props.maxSpeed;
+		CurrentCombo = 0;
+		ComboHoldTime = props.comboHoldTime;
 		Swords = props.swords;
 		MaxHearts = props.hearts;
 		Hearts = MaxHearts;

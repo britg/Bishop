@@ -17,6 +17,8 @@ public class Room : GameModel {
 
 	public int enemyCount;
 	public int swordCount;
+	public int streamChance;
+	public int streamLength;
 
 	public Bounds bounds;
 
