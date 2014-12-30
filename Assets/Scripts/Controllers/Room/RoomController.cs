@@ -42,7 +42,7 @@ public class RoomController : GameController {
 		}
 
 		PlaceSwords(room.swordCount);
-		FillGold();
+//		FillGold();
 		PlaceEnemies();
 	}
 	
