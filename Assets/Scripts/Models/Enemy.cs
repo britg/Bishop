@@ -12,19 +12,23 @@ public class Enemy : Agent {
 
 		public bool wanders;
 		public State state;
+		public float detectRadius;
+		public float detectTime;
 
 		public Direction direction;
 	}
 
-	public bool Wanders { get; set; }
+	public float DetectRadius { get; set; }
+	public float DetectTime { get; set; }
 
 	public Enemy (Properties props) {
 		Level = props.level;
 		Courage = props.courage;
-		Wanders = props.wanders;
 		WanderSpeed = props.wanderSpeed;
 		AggroSpeed = props.aggroSpeed;
 		CurrentDirection = props.direction;
+		DetectRadius = props.detectRadius;
+		DetectTime = props.detectTime;
 
 		EnterState(props.state);
 	}

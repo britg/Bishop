@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Agent : GameModel {
 
@@ -29,6 +30,8 @@ public class Agent : GameModel {
 	public float CurrentSpeed { get; set; }
 	public Direction CurrentDirection { get; set; }
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
+
+	public List<Vector3> TraversableSpots;
 
 	public Vector3 CurrentPosition {
 		get {

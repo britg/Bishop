@@ -43,7 +43,8 @@ public class RoomController : GameController {
 
 		PlaceSwords(room.swordCount);
 //		FillGold();
-		PlaceEnemies();
+//		PlaceEnemies();
+		ReplaceEnemyPlaceholders();
 	}
 	
 	// Update is called once per frame
@@ -174,5 +175,22 @@ public class RoomController : GameController {
 			return;
 		}
 		ObjectPool.ReturnGold(goldFromPool);
+	}
+
+	void ReplaceEnemyPlaceholders () {
+		foreach (Transform child in transform) {
+			if (child.name == "EnemyPlaceholder") {
+				ReplaceEnemyPlaceholder(child.gameObject);
+			}
+		}
+	}
+
+	void ReplaceEnemyPlaceholder (GameObject placeholder) {
+		var position = placeholder.transform.position;
+		var rotation = placeholder.transform.rotation;
+		GameObject enemyObj = (GameObject)Instantiate(enemyPrefab, position, rotation);
+		EnemyController enemyController = enemyObj.GetComponent<EnemyController>();
+		enemyController.traversableSpots = freeSpots;
+		Destroy(placeholder);
 	}
 }
