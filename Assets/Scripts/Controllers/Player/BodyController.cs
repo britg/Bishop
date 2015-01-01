@@ -45,7 +45,7 @@ public class BodyController : GameController {
 			service.Pickup();
 			PlayPickup();
 			ShowGemPickup();
-			ObjectPool.ReturnGold(go);
+			go.SetActive(false);
 		}
 	}
 

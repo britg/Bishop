@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WanderController : GameController {
 
-	public Agent Agent { get; set; }
+	public Agent agent { get; set; }
 
 	Agent.Direction nextDirection = Agent.Direction.Stop;
 	bool nextWaypointSet = false;
@@ -22,11 +22,11 @@ public class WanderController : GameController {
 			return;
 		}
 
-		if (Agent.CurrentStateWandering) {
+		if (agent.CurrentStateWandering) {
 
 			if (!nextWaypointSet) {
-				nextWaypoint = transform.position + Agent.DirectionVector;
-				nextDirection = Agent.CurrentDirection;
+				nextWaypoint = transform.position + agent.DirectionVector;
+				nextDirection = agent.CurrentDirection;
 				nextWaypointSet = true;
 			}
 
@@ -35,8 +35,8 @@ public class WanderController : GameController {
 	}
 
 	void Wander () {
-		Vector3 frameMove = Agent.Velocity * Time.deltaTime;
-		float frameMagnitude = Agent.CurrentSpeed * Time.deltaTime;
+		Vector3 frameMove = agent.Velocity * Time.deltaTime;
+		float frameMagnitude = agent.CurrentSpeed * Time.deltaTime;
 		float nextMoveDistance = currentMoveDistance + frameMagnitude;
 		if (nextMoveDistance > waypointDistance) {
 			currentMoveDistance = waypointDistance;
@@ -52,12 +52,12 @@ public class WanderController : GameController {
 	void ChooseNextWaypoint () {
 		if (AtWaypoint()) {
 			currentMoveDistance = 0f;
-			Agent.CurrentDirection = nextDirection;
-			nextWaypoint = transform.position + Agent.DirectionVector;
+			agent.CurrentDirection = nextDirection;
+			nextWaypoint = transform.position + agent.DirectionVector;
 
 			if (!WaypointValid(nextWaypoint)) {
 				RandomizeNextDirection();
-				Agent.CurrentDirection = Agent.Direction.Stop;
+				agent.CurrentDirection = Agent.Direction.Stop;
 			}
 		}
 	}
@@ -68,7 +68,7 @@ public class WanderController : GameController {
 	}
 	
 	bool AtWaypoint () {
-		return Agent.CurrentDirection == Agent.Direction.Stop ||
+		return agent.CurrentDirection == Agent.Direction.Stop ||
 			(Vector3.SqrMagnitude(transform.position - nextWaypoint) < consideredEqual) ||
 				currentMoveDistance >= waypointDistance;
 	}

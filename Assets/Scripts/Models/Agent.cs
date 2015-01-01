@@ -36,6 +36,7 @@ public class Agent : GameModel {
 			return room.waypoints;
 		}
 	}
+	public int currentChaseIndex { get; set; }
 
 	public Vector3 DirectionVector {
 		get {

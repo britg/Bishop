@@ -42,6 +42,14 @@ public class Player : Agent {
 	public int 		Keys { get; set; }
 
 	public List<Vector3> waypointsTraversed;
+	public Vector3 lastWaypointTraversed {
+		get {
+			if (waypointsTraversed.Count < 1) {
+				return CurrentPosition;
+			}
+			return waypointsTraversed[waypointsTraversed.Count -1];
+		}
+	}
 
 	// Player Input
 

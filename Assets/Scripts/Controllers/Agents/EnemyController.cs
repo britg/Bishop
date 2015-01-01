@@ -17,9 +17,7 @@ public class EnemyController : GameController {
 
 	// Update is called once per frame
 	void Update () {
-		if (enemy.CurrentState != Agent.State.Aggro) {
-			DetectPlayer();
-		}
+
 	}
 
 	public void Activate (Room _room) {
@@ -28,44 +26,8 @@ public class EnemyController : GameController {
 		enemy.go = gameObject;
 		enemy.room = room;
 
-		GetComponent<WanderController>().Agent = enemy;
+		GetComponent<WanderController>().agent = enemy;
 		GetComponent<AggroController>().agent = enemy;
-	}
-
-	float currentDetectTime = 0f;
-	void DetectPlayer () {
-		if (currentDetectTime < enemy.DetectTime) {
-			ContinueDetect();
-		} else {
-			enemy.EnterState(Agent.State.Aggro);
-		}
-	}
-
-	void ContinueDetect () {
-		var origin = transform.position;
-		var playerPos = player.go.transform.position;
-		var direction = playerPos - origin;
-		RaycastHit[] hits = Physics.RaycastAll (transform.position, direction, enemy.DetectRadius);
-
-		float playerDist = Mathf.Infinity;
-		float wallDist = Mathf.Infinity;
-		foreach(var hit in hits) {
-			if (GameLayer.isWall(hit)) {
-				if (hit.distance < wallDist) {
-					wallDist = hit.distance;
-				}
-			}
-
-			if (GameLayer.isPlayer(hit)) {
-				playerDist = hit.distance;
-			}
-		}
-
-		if (playerDist < wallDist) {
-			currentDetectTime += Time.deltaTime;
-		} else {
-			currentDetectTime = 0f;
-		}
 	}
 
 }
