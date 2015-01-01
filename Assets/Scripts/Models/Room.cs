@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Room : GameModel {
@@ -21,6 +22,8 @@ public class Room : GameModel {
 	public int streamLength;
 
 	public Bounds bounds;
+
+	public List<Vector3> waypoints;
 
 	Bounds fillableBounds;
 	public Bounds FillableBounds {

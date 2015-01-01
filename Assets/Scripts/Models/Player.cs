@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : Agent {
 
@@ -39,6 +40,8 @@ public class Player : Agent {
 	public int 		Hearts { get; set; }
 	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
+
+	public List<Vector3> waypointsTraversed;
 
 	// Player Input
 

@@ -12,7 +12,7 @@ public class Agent : GameModel {
 		Controlled
 	}
 
-	public GameObject go;
+	public Room room { get; set; }
 	public int Level { get; set; }
 	public float Courage { get; set; }
 	public float WanderSpeed { get; set; }
@@ -31,11 +31,9 @@ public class Agent : GameModel {
 	public Direction CurrentDirection { get; set; }
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
 
-	public List<Vector3> TraversableSpots;
-
-	public Vector3 CurrentPosition {
+	public List<Vector3> waypoints {
 		get {
-			return go.transform.position;
+			return room.waypoints;
 		}
 	}
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PathingService {
 
@@ -58,6 +59,36 @@ public class PathingService {
 	public bool CanTurn () {
 		var turnPoint = agent.CurrentPosition + agent.NextVelocity;
 		return DestinationValid(turnPoint);
+	}
+
+	public static bool atWaypoint (Agent agent) {
+		return false;
+	}
+
+	public static List<Vector3> GetRoomWaypoints (Room room) {
+		List<Vector3> waypoints = new List<Vector3>();
+		for (var x = room.FillableBounds.min.x; x <= room.FillableBounds.max.x; x++) {
+			for (var z = room.FillableBounds.min.z; z <= room.FillableBounds.max.z; z++) {
+				var spot = new Vector3(x, 0f, z) + room.CurrentPosition;
+				if (isWaypoint(spot)) {
+					waypoints.Add(spot);
+				}
+			}
+		}
+		return waypoints;
+	}
+	
+	public static bool isWaypoint (Vector3 point) {
+		var castFrom = point;
+		castFrom.y = 2f;
+		var hits = Physics.SphereCastAll(castFrom, 0.1f, Vector3.down, 2f);
+		foreach (var hit in hits) {
+			if (GameLayer.isWall(hit)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

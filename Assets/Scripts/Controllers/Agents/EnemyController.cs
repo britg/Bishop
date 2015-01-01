@@ -7,19 +7,12 @@ public class EnemyController : GameController {
 	public Enemy enemy;
 	public Enemy.Properties enemyInitialization;
 
-	public List<Vector3> traversableSpots;
-
 	Player player;
+	Room room;
 
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
-		enemy = new Enemy(enemyInitialization);
-		enemy.go = gameObject;
-		enemy.TraversableSpots = traversableSpots;
-
-		GetComponent<WanderController>().Agent = enemy;
-		GetComponent<AggroController>().agent = enemy;
 	}
 
 	// Update is called once per frame
@@ -27,6 +20,16 @@ public class EnemyController : GameController {
 		if (enemy.CurrentState != Agent.State.Aggro) {
 			DetectPlayer();
 		}
+	}
+
+	public void Activate (Room _room) {
+		room = _room;
+		enemy = new Enemy(enemyInitialization);
+		enemy.go = gameObject;
+		enemy.room = room;
+
+		GetComponent<WanderController>().Agent = enemy;
+		GetComponent<AggroController>().agent = enemy;
 	}
 
 	float currentDetectTime = 0f;

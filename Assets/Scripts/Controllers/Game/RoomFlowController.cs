@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 public class RoomFlowController : GameController {
 
+	Player player;
+
 	public GameObject roomsContainer;
 	public float roomScrollOffset = 45f;
 	public int minRoomCount = 2;
 	public float roomLength = 31f;
 
 	public float currentZ;
-	List<GameObject> rooms;
+	List<GameObject> roomObjs;
 	GameObject[] roomPrefabs;
 
 	float CurrentScroll {
@@ -19,51 +21,68 @@ public class RoomFlowController : GameController {
 		}
 	}
 
+	Room _currentRoom;
+	Room currentRoom {
+		get {
+			if (_currentRoom == null) {
+				_currentRoom = roomObjs[0].GetComponent<RoomController>().room;
+			}
+			return _currentRoom;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		roomPrefabs = Resources.LoadAll<GameObject>("Rooms");
-		GetRooms();
+		GetRoomObjects();
+		EnsureRoomObjects();
+		player = GetPlayer();
+		PlacePlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		RemoveScrolledRooms();
-		EnsureRooms();
+		RemoveScrolledRoomObjects();
+		EnsureRoomObjects();
 	}
 
-	void GetRooms () {
-		rooms = new List<GameObject>();
+	void GetRoomObjects () {
+		roomObjs = new List<GameObject>();
 		foreach(Transform child in roomsContainer.transform) {
-			rooms.Add(child.gameObject);
+			roomObjs.Add(child.gameObject);
 		}
 	}
 
-	void RemoveScrolledRooms () {
+	void RemoveScrolledRoomObjects () {
 		var roomsToDestroy = new List<GameObject>();
-		foreach (GameObject room in rooms) {
-			if (room.transform.position.z < CurrentScroll - roomScrollOffset) {
-				roomsToDestroy.Add(room);
+		foreach (GameObject roomObj in roomObjs) {
+			if (roomObj.transform.position.z < CurrentScroll - roomScrollOffset) {
+				roomsToDestroy.Add(roomObj);
 			}
 		}
 
-		foreach(GameObject room in roomsToDestroy) {
-			rooms.Remove(room);
-			Destroy(room);
+		foreach(GameObject roomObj in roomsToDestroy) {
+			roomObjs.Remove(roomObj);
+			Destroy(roomObj);
 		}
 	}
 
-	void EnsureRooms () {
-		if (rooms.Count < minRoomCount) {
-			AddRoom();
+	void EnsureRoomObjects () {
+		if (roomObjs.Count < minRoomCount) {
+			AddRoomObject();
 		}
 	}
 
-	void AddRoom () {
+	void AddRoomObject () {
 		var roomPrefab = (GameObject)roomPrefabs[Random.Range (0, roomPrefabs.Length)];
 		var pos = new Vector3(0f, 0f, currentZ);
-		var room = (GameObject)Instantiate(roomPrefab, pos, roomPrefab.transform.rotation);
-		room.transform.SetParent(roomsContainer.transform);
+		var roomObj = (GameObject)Instantiate(roomPrefab, pos, roomPrefab.transform.rotation);
+		roomObj.transform.SetParent(roomsContainer.transform);
 		currentZ += roomLength;
-		rooms.Add(room);
+		roomObjs.Add(roomObj);
+	}
+
+	void PlacePlayer () {
+		player.room = currentRoom;
 	}
 }

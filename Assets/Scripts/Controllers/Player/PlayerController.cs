@@ -1,44 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : GameController {
-
-	float consideredEqual = 0.001f;
 
 	public Player player;
 	public Player.Properties playerInitialization;
 	public float playerAccel;
-
-	public float collisionDistance = 0.5f;
-	public float collisionRadius = 0.5f;
-
 	public AudioSource footsteps;
-
-	float waypointDistance = 1f;
-
-	bool nextWaypointInitialized = false;
-	Vector3 nextWaypoint;
-	Vector3 NextWaypoint {
-		get {
-			if (!nextWaypointInitialized) {
-				nextWaypoint = transform.position;
-			} 
-			return nextWaypoint;
-		}
-		set {
-			nextWaypointInitialized = true;
-			nextWaypoint = value;
-		}
-	}
-
 	bool canMove = false;
-
 	PathingService pathingService;
 
 	void Awake () {
 		player = new Player(playerInitialization, gameObject);
 		player.NextDirection = player.CurrentDirection;
+		player.waypointsTraversed = new List<Vector3>();
 		pathingService = new PathingService(player);
+
+		// Proxy for some kind of intro sequence
 		Invoke ("EnableMovement", 1f);
 	}
 
@@ -70,7 +49,6 @@ public class PlayerController : GameController {
 			SpeedUp();
 		} else {
 			AttemptTurnOrStop();
-//			StopPlayer();
 		}
 
 		FaceDirection();
@@ -103,14 +81,6 @@ public class PlayerController : GameController {
 		if (player.CurrentSpeed < player.MaxSpeed) {
 			player.CurrentSpeed += playerAccel * Time.deltaTime;
 		}
-	}
-
-	void SnapToNextWaypoint () {
-		transform.position = NextWaypoint;
-	}
-
-	bool MovedPastWaypoint (float nextMoveDistance) {
-		return nextMoveDistance > waypointDistance;
 	}
 
 	void LockLane () {
@@ -187,18 +157,6 @@ public class PlayerController : GameController {
 
 	void DisableMovement () {
 		canMove = false;
-	}
-
-	bool OnPivot () {
-		var modX = transform.position.x % 1f < consideredEqual;
-		var modZ = transform.position.z % 1f < consideredEqual;
-
-		if (modX && modZ) {
-//			Debug.Log ("Mod x is " + modX + " mod z is " + modZ);
-			return true;
-		}
-
-		return false;
 	}
 
 	void CheckDead () {

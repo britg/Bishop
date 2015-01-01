@@ -35,6 +35,7 @@ public class BodyController : GameController {
 		DetectInstantDeath(collider.gameObject);
 		DetectDoor(collider.gameObject);
 		DetectCastle(collider.gameObject);
+		DetectWaypoint(collider.gameObject);
 	}
 
 	void DetectGem (GameObject go) {
@@ -135,6 +136,12 @@ public class BodyController : GameController {
 	void DetectCastle (GameObject go) {
 		if (go.name == "Castle Door Trigger") {
 			ScrollingController.TransitionToCastle();
+		}
+	}
+
+	void DetectWaypoint (GameObject go) {
+		if (go.tag == "Waypoint") {
+			player.waypointsTraversed.Add(go.transform.position);
 		}
 	}
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class AggroController : GameController {
 
@@ -33,18 +34,30 @@ public class AggroController : GameController {
 	}
 
 	void Chase () {
+		var nextWaypoint = NextWaypoint(transform.position);
+		var direction = nextWaypoint - transform.position;
+		var nextPosition = transform.position + Time.deltaTime * agent.CurrentSpeed * direction.normalized;
+		transform.position = nextPosition;
+	}
 
-		agent.TraversableSpots.Sort ((a, b) => {
-			return Vector3.Distance(a, nextPosition).CompareTo(Vector3.Distance(b, nextPosition));
+	Vector3 NextWaypoint (Vector3 currentWaypoint) {
+		var playerPos = player.CurrentPosition;
+
+		agent.waypoints.Sort ((a, b) => {
+			return Vector3.Distance(a, currentWaypoint).CompareTo(Vector3.Distance(b, currentWaypoint));
 		});
 
-		closestSpot = agent.TraversableSpots[0];
-		if (closestSpot.Equals(transform.position)) {
-			closestSpot = agent.TraversableSpots[1];
-		}
-		direction = closestSpot - transform.position;
-		nextPosition = transform.position + Time.deltaTime * agent.CurrentSpeed * direction.normalized;
-		transform.position = nextPosition;
+		List<Vector3> neighbors = new List<Vector3>(
+			agent.waypoints.GetRange(0, 4)
+				.Where(spot => Vector3.Distance(spot, currentWaypoint) <= 1.1f)
+		);
+
+		neighbors.Sort ((a, b) => {
+			return Vector3.Distance(a, playerPos).CompareTo(Vector3.Distance(b, playerPos));
+		});
+
+		
+		return neighbors[0];
 	}
 
 }
