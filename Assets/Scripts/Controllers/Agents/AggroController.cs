@@ -23,54 +23,24 @@ public class AggroController : GameController {
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
-		SetWaypointsToWatch();
 	}
 	
 	// Update is called once per frame
+	float currentAlertTime = 0f;
 	void Update () {
 
 		if (Paused) {
 			return;
 		}
 
-		if (agent.CurrentState != Agent.State.Aggro) {
-			WatchForPlayer();
-		} else {
+		if (agent.CurrentStateAlert) {
+			currentAlertTime += Time.deltaTime;
+			if (currentAlertTime >= agent.AlertTime) {
+				agent.EnterState(Agent.State.Aggro);
+			}
+		} else if (agent.CurrentStateAggro) {
 			Chase();
 		}
-	}
-
-	void SetWaypointsToWatch () {
-		waypointsToWatch = new List<Vector3>();
-		waypointsToWatch.Add(transform.position + Vector3.right * 0.5f);
-		waypointsToWatch.Add(transform.position + Vector3.right);
-		waypointsToWatch.Add(transform.position + Vector3.right * 1.5f);
-		waypointsToWatch.Add(transform.position + Vector3.right * 2f);
-		waypointsToWatch.Add(transform.position + Vector3.forward * 0.5f);
-		waypointsToWatch.Add(transform.position + Vector3.forward);
-		waypointsToWatch.Add(transform.position + Vector3.forward * 1.5f);
-		waypointsToWatch.Add(transform.position + Vector3.forward * 2f);
-		waypointsToWatch.Add(transform.position + Vector3.back * 0.5f);
-		waypointsToWatch.Add(transform.position + Vector3.back);
-		waypointsToWatch.Add(transform.position + Vector3.back * 1.5f);
-		waypointsToWatch.Add(transform.position + Vector3.back * 2f);
-		waypointsToWatch.Add(transform.position + Vector3.left * 0.5f);
-		waypointsToWatch.Add(transform.position + Vector3.left);
-		waypointsToWatch.Add(transform.position + Vector3.left * 1.5f);
-		waypointsToWatch.Add(transform.position + Vector3.left * 2f);
-	}
-
-	void WatchForPlayer () {
-		foreach (var wp in waypointsToWatch) {
-			if (player.lastWaypointTraversed.Equals(wp)) {
-				agent.currentChaseIndex = player.waypointsTraversed.Count - 1;
-				Invoke("EnterAggro", 1f);
-			}
-		}
-	}
-
-	void EnterAggro () {
-		agent.EnterState(Agent.State.Aggro);
 	}
 
 	void Chase () {

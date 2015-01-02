@@ -29,6 +29,7 @@ public class EnemyController : GameController {
 
 		GetComponent<WanderController>().agent = enemy;
 		GetComponent<AggroController>().agent = enemy;
+		GetComponent<PlayerDetectController>().agent = enemy;
 	}
 
 }

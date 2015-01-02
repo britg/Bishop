@@ -27,6 +27,10 @@ public class Agent : GameModel {
 		Stop
 	}
 
+	public float DetectRadius { get; set; }
+	public float DetectTime { get; set; }
+	public float AlertTime { get; set; }
+
 	public float CurrentSpeed { get; set; }
 	public Direction CurrentDirection { get; set; }
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
@@ -155,5 +159,9 @@ public class Agent : GameModel {
 		return false;
 	}
 
+	public void OnDetectPlayer (Player player) {
+		currentChaseIndex = player.waypointsTraversed.Count - 1;
+		EnterState(Agent.State.Alert);
+	}
 
 }
