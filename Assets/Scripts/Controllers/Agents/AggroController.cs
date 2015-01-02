@@ -42,13 +42,21 @@ public class AggroController : GameController {
 
 	void SetWaypointsToWatch () {
 		waypointsToWatch = new List<Vector3>();
+		waypointsToWatch.Add(transform.position + Vector3.right * 0.5f);
 		waypointsToWatch.Add(transform.position + Vector3.right);
+		waypointsToWatch.Add(transform.position + Vector3.right * 1.5f);
 		waypointsToWatch.Add(transform.position + Vector3.right * 2f);
+		waypointsToWatch.Add(transform.position + Vector3.forward * 0.5f);
 		waypointsToWatch.Add(transform.position + Vector3.forward);
+		waypointsToWatch.Add(transform.position + Vector3.forward * 1.5f);
 		waypointsToWatch.Add(transform.position + Vector3.forward * 2f);
+		waypointsToWatch.Add(transform.position + Vector3.back * 0.5f);
 		waypointsToWatch.Add(transform.position + Vector3.back);
+		waypointsToWatch.Add(transform.position + Vector3.back * 1.5f);
 		waypointsToWatch.Add(transform.position + Vector3.back * 2f);
+		waypointsToWatch.Add(transform.position + Vector3.left * 0.5f);
 		waypointsToWatch.Add(transform.position + Vector3.left);
+		waypointsToWatch.Add(transform.position + Vector3.left * 1.5f);
 		waypointsToWatch.Add(transform.position + Vector3.left * 2f);
 	}
 
