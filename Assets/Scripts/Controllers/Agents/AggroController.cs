@@ -12,7 +12,11 @@ public class AggroController : GameController {
 
 	Vector3 currentWaypoint {
 		get {
-			return player.waypointsTraversed[agent.currentChaseIndex];
+			if (player.waypointsTraversed.Count > agent.currentChaseIndex) {
+				return player.waypointsTraversed[agent.currentChaseIndex];
+			} else {
+				return player.lastWaypointTraversed;
+			}
 		}
 	}
 
@@ -40,9 +44,12 @@ public class AggroController : GameController {
 		waypointsToWatch = new List<Vector3>();
 		waypointsToWatch.Add(transform.position + Vector3.right);
 		waypointsToWatch.Add(transform.position + Vector3.right * 2f);
-		waypointsToWatch.Add(transform.position + Vector3.up);
-		waypointsToWatch.Add(transform.position + Vector3.down);
+		waypointsToWatch.Add(transform.position + Vector3.forward);
+		waypointsToWatch.Add(transform.position + Vector3.forward * 2f);
+		waypointsToWatch.Add(transform.position + Vector3.back);
+		waypointsToWatch.Add(transform.position + Vector3.back * 2f);
 		waypointsToWatch.Add(transform.position + Vector3.left);
+		waypointsToWatch.Add(transform.position + Vector3.left * 2f);
 	}
 
 	void WatchForPlayer () {
@@ -55,8 +62,8 @@ public class AggroController : GameController {
 	}
 
 	void Chase () {
-		var dir = currentWaypoint - transform.position;
-		transform.position += Time.deltaTime * dir.normalized * agent.CurrentSpeed;
+		var diff = currentWaypoint - agent.lastWaypoint;
+		transform.position += Time.deltaTime * agent.AggroSpeed * diff.normalized;
 	}
 
 }

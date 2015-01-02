@@ -141,7 +141,8 @@ public class BodyController : GameController {
 
 	void DetectWaypoint (GameObject go) {
 		if (go.tag == "Waypoint") {
-			player.waypointsTraversed.Add(go.transform.position);
+			var waypoint = go.transform.position;
+			player.waypointService.OnEnterWaypoint(waypoint);
 		}
 	}
 

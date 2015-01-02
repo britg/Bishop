@@ -41,7 +41,8 @@ public class Player : Agent {
 	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
 
-	public List<Vector3> waypointsTraversed;
+	public WaypointService waypointService;
+	public List<Vector3> waypointsTraversed { get; set; }
 	public Vector3 lastWaypointTraversed {
 		get {
 			if (waypointsTraversed.Count < 1) {
@@ -71,6 +72,7 @@ public class Player : Agent {
 		Keys = props.keys;
 		EnterState(Agent.State.Controlled);
 
+		waypointService = new WaypointService(this);
 		Load();
 	}
 

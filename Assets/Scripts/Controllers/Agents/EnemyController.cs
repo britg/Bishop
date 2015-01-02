@@ -25,6 +25,7 @@ public class EnemyController : GameController {
 		enemy = new Enemy(enemyInitialization);
 		enemy.go = gameObject;
 		enemy.room = room;
+		enemy.lastWaypoint = transform.position;
 
 		GetComponent<WanderController>().agent = enemy;
 		GetComponent<AggroController>().agent = enemy;

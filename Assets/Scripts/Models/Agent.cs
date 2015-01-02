@@ -37,6 +37,7 @@ public class Agent : GameModel {
 		}
 	}
 	public int currentChaseIndex { get; set; }
+	public Vector3 lastWaypoint { get; set; }
 
 	public Vector3 DirectionVector {
 		get {
@@ -69,6 +70,23 @@ public class Agent : GameModel {
 		}
 		
 		return Vector3.zero;
+	}
+
+	public void SetDirectionVector (Vector3 dirV) {
+
+		if (Mathf.Abs(dirV.normalized.x) > Mathf.Abs(dirV.normalized.z)) {
+			if (dirV.x > 0f) {
+				CurrentDirection = Agent.Direction.Right;
+			} else {
+				CurrentDirection = Agent.Direction.Left;
+			}
+		} else {
+			if (dirV.z > 0f) {
+				CurrentDirection = Agent.Direction.Up;
+			} else {
+				CurrentDirection = Agent.Direction.Down;
+			}
+		}
 	}
 
 	public void EnterState (Enemy.State newState) {
