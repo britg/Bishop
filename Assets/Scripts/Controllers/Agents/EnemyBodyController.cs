@@ -27,7 +27,7 @@ public class EnemyBodyController : GameController {
 	void DetectWaypoint (GameObject go) {
 		if (go.tag == "Waypoint" && enemy != null) {
 			var thisWaypoint = go.transform.position;
-			if (player != null) {
+			if (player != null && enemy.CurrentStateAggro) {
 				Vector3 targetWaypoint;
 				if (player.waypointsTraversed.Count < enemy.currentChaseIndex + 1) {
 					targetWaypoint = player.waypointsTraversed[player.waypointsTraversed.Count-1];

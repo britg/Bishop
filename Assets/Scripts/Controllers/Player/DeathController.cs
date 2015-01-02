@@ -35,8 +35,9 @@ public class DeathController : GameController {
 	}
 
 	void ShowRestart () {
-		gameOverPanel.SetActive(true);
-		gameOverText.SetActive(true);
-		inTransition = false;
+		Application.LoadLevel(0);
+//		gameOverPanel.SetActive(true);
+//		gameOverText.SetActive(true);
+//		inTransition = false;
 	}
 }

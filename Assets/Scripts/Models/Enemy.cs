@@ -15,9 +15,12 @@ public class Enemy : Agent {
 		public float detectRadius;
 		public float detectTime;
 		public float alertTime;
+		public int pointValue;
 
 		public Direction direction;
 	}
+
+	public int pointValue { get; set; }
 
 	public Enemy (Properties props) {
 		Level = props.level;
@@ -28,6 +31,7 @@ public class Enemy : Agent {
 		DetectRadius = props.detectRadius;
 		DetectTime = props.detectTime;
 		AlertTime = props.alertTime;
+		pointValue = props.pointValue;
 
 		EnterState(props.state);
 	}

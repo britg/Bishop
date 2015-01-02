@@ -7,9 +7,11 @@ public class EnemySpawnPointController : MonoBehaviour {
 	public GameObject enemyPrefab;
 	public float cooldown;
 	public float max;
+	public Agent.State initialState;
 
 	float spawnCount;
 	Room room;
+	GameObject currentEnemy;
 
 	// Use this for initialization
 	void Start () {
@@ -22,14 +24,24 @@ public class EnemySpawnPointController : MonoBehaviour {
 
 	public void Activate (Room _room) {
 		room = _room;
-		SpawnEnemy();
+		var rand = Random.Range(25, 50);
+		InvokeRepeating("AttemptSpawn", 0f, rand);
 	}
 
 	void SpawnEnemy () {
 		var position = transform.position;
 		var rotation = transform.rotation;
-		GameObject enemyObj = (GameObject)Instantiate(enemyPrefab, position, rotation);
-		EnemyController enemyController = enemyObj.GetComponent<EnemyController>();
+		currentEnemy = (GameObject)Instantiate(enemyPrefab, position, rotation);
+		EnemyController enemyController = currentEnemy.GetComponent<EnemyController>();
 		enemyController.Activate(room);
+		enemyController.enemy.EnterState(initialState);
+	}
+
+	void AttemptSpawn () {
+		if (currentEnemy != null) {
+			return;
+		}
+
+		SpawnEnemy();
 	}
 }

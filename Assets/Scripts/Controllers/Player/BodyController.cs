@@ -13,7 +13,7 @@ public class BodyController : GameController {
 
 	public GameObject playerGold;
 
-	public float gemPickupTime = 0.2f;
+	public float goldPickupTime = 0.2f;
 	public float itemPickupTime = 0.3f;
 
 	// Use this for initialization
@@ -27,7 +27,7 @@ public class BodyController : GameController {
 	}
 
 	void OnTriggerEnter (Collider collider) {
-		DetectGem(collider.gameObject);
+		DetectGold(collider.gameObject);
 		DetectSword(collider.gameObject);
 		DetectHeart(collider.gameObject);
 		DetectKey(collider.gameObject);
@@ -38,14 +38,14 @@ public class BodyController : GameController {
 		DetectWaypoint(collider.gameObject);
 	}
 
-	void DetectGem (GameObject go) {
-		var gemController = go.GetComponent<GoldController>();
-		if (gemController != null) {
-			var service = new GoldPickupService(player, gemController.gem);
+	void DetectGold (GameObject go) {
+		var goldController = go.GetComponent<GoldController>();
+		if (goldController != null) {
+			var service = new GoldPickupService(player, goldController.gold);
 			service.Pickup();
 			PlayPickup();
-			ShowGemPickup();
-			go.SetActive(false);
+			ShowGoldPickup();
+			goldController.OnPickup();
 		}
 	}
 
@@ -54,7 +54,7 @@ public class BodyController : GameController {
 	}
 
 	bool goldAnimating = false;
-	void ShowGemPickup () {
+	void ShowGoldPickup () {
 		if (goldAnimating) {
 			return;
 		}
@@ -62,26 +62,37 @@ public class BodyController : GameController {
 		iTween.MoveBy (playerGold, iTween.Hash (
 			"islocal", true,
 			"y", 2f,
-			"time", gemPickupTime,
-			"oncomplete", "ResetGem",
+			"time", goldPickupTime,
+			"oncomplete", "ResetGold",
 			"oncompletetarget", gameObject));
 		iTween.RotateBy (playerGold, iTween.Hash (
 			"islocal", true,
 			"y", 1f,
-			"time", gemPickupTime));
+			"time", goldPickupTime));
 	}
 
-	void ResetGem () {
+	void ResetGold () {
 		goldAnimating = false;
 		playerGold.transform.localPosition = Vector3.zero;
 	}
 
 	void DetectSword (GameObject go) {
 		if (go.name == "Sword") {
-			player.Swords += 1;
-			Destroy(go);
-			swordPickupSound.Play();
+			var swordController = go.transform.parent.gameObject.GetComponent<SwordController>();
+			Sword sword = swordController.sword;
+			var service = new SwordPickupService(player, sword);
+			bool purchased = service.AttemptPurchase();
+			if (purchased) {
+				swordController.OnPickup();
+				swordPickupSound.Play();
+				Invoke ("RemoveSword", 10f); // TEMP for test
+			}
 		}
+	}
+
+	// TEMP
+	void RemoveSword () {
+		player.Swords = 0;
 	}
 
 	void DetectHeart (GameObject go) {

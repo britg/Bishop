@@ -55,7 +55,7 @@ public class WanderController : GameController {
 			agent.CurrentDirection = nextDirection;
 			nextWaypoint = transform.position + agent.DirectionVector;
 
-			if (!WaypointValid(nextWaypoint)) {
+			if (!WaypointValid(nextWaypoint) || agent.CurrentDirection == Agent.Direction.Stop) {
 				RandomizeNextDirection();
 				agent.CurrentDirection = Agent.Direction.Stop;
 			}

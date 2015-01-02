@@ -13,7 +13,7 @@ public class EnemyCollisionService {
 
 	public void Collide () {
 		if (PlayerSurvives()) {
-			player.Swords -= 1;
+			player.Points += enemy.pointValue;
 			GameObject.Destroy(enemy.go);
 		} else {
 			if (player.Hearts <= 1) {

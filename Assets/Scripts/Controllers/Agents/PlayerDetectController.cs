@@ -41,6 +41,7 @@ public class PlayerDetectController : GameController {
 		bool left = ScanHits(leftHits);
 
 		if (forward || back || right || left) {
+			agent.currentChaseIndex = player.waypointsTraversed.Count - 1;
 			currentDetectTime += Time.deltaTime;
 		} else {
 			currentDetectTime = 0f;

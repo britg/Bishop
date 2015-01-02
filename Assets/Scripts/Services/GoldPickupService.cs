@@ -1,21 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GoldPickupService {
 
 	Player player;
-	Gem gem;
+	Gold gold;
 
 	float currentComboHoldTime;
 
-	public GoldPickupService (Player _player, Gem _gem) {
+	public GoldPickupService (Player _player, Gold _gold) {
 		player = _player;
-		gem = _gem;
+		gold = _gold;
 	}
 
 	public void Pickup () {
-		player.Points += 1;
-		player.Gold += 1;
+		player.Points += gold.pointValue;
+		player.Gold += gold.value;
 	}
 
 	void ContinueCombo () {

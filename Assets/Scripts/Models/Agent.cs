@@ -160,7 +160,7 @@ public class Agent : GameModel {
 	}
 
 	public void OnDetectPlayer (Player player) {
-		currentChaseIndex = player.waypointsTraversed.Count - 1;
+//		currentChaseIndex = player.waypointsTraversed.Count - 1;
 		EnterState(Agent.State.Alert);
 	}
 
