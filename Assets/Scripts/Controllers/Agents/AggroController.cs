@@ -56,9 +56,13 @@ public class AggroController : GameController {
 		foreach (var wp in waypointsToWatch) {
 			if (player.lastWaypointTraversed.Equals(wp)) {
 				agent.currentChaseIndex = player.waypointsTraversed.Count - 1;
-				agent.EnterState(Agent.State.Aggro);
+				Invoke("EnterAggro", 1f);
 			}
 		}
+	}
+
+	void EnterAggro () {
+		agent.EnterState(Agent.State.Aggro);
 	}
 
 	void Chase () {

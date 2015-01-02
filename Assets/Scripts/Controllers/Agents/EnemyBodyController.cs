@@ -23,10 +23,10 @@ public class EnemyBodyController : GameController {
 	}
 
 
+	Vector3 incrementWaypoint;
 	void DetectWaypoint (GameObject go) {
 		if (go.tag == "Waypoint" && enemy != null) {
 			var thisWaypoint = go.transform.position;
-			enemy.lastWaypoint = thisWaypoint;
 			if (player != null) {
 				Vector3 targetWaypoint;
 				if (player.waypointsTraversed.Count < enemy.currentChaseIndex + 1) {
@@ -36,10 +36,17 @@ public class EnemyBodyController : GameController {
 				}
 
 				if (thisWaypoint == targetWaypoint) {
-					enemy.currentChaseIndex++;
+					incrementWaypoint = thisWaypoint;
+					Invoke ("IncrementCurrentChaseIndex", 0.5f / enemy.AggroSpeed);
+//					IncrementCurrentChaseIndex();
 				}
 			}
 		}
+	}
+
+	void IncrementCurrentChaseIndex () {
+		enemy.lastWaypoint = incrementWaypoint;
+		enemy.currentChaseIndex++;
 	}
 
 
