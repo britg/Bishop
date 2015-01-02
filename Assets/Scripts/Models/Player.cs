@@ -92,7 +92,10 @@ public class Player : Agent {
 	}
 
 	public void SaveGold () {
-		ES2.Save(Gold, GOLD);
+//		ES2.Save(Gold, GOLD);
+
+		// reset gold every time for now
+		ES2.Save(0, GOLD);
 	}
 
 	public void SaveScore () {
