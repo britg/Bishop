@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraController : GameController {
+public class FollowPlayerController : GameController {
 
-	public int framerate = 60;
-	public bool followPlayer = true;
+	Player player;
 
 	// Use this for initialization
 	void Start () {
-		Application.targetFrameRate = framerate;
+		player = GetPlayer();
+		transform.position = player.CurrentPosition;
 	}
 	
 	// Update is called once per frame
@@ -17,6 +17,6 @@ public class CameraController : GameController {
 	}
 
 	void LateUpdate () {
-
+		transform.position = player.CurrentPosition;
 	}
 }

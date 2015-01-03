@@ -41,6 +41,8 @@ public class Player : Agent {
 	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
 
+	public bool 	isSwiping { get; set; }
+
 	public WaypointService waypointService;
 	public List<Vector3> waypointsTraversed { get; set; }
 	public Vector3 lastWaypointTraversed {

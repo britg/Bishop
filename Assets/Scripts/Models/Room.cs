@@ -14,7 +14,6 @@ public class Room : GameModel {
 	}
 
 	public Type type;
-	public Vector3 dimensions; // default dimensions: (15, 0, 30)
 
 	public int enemyCount;
 	public int swordCount;
@@ -28,11 +27,7 @@ public class Room : GameModel {
 	Bounds fillableBounds;
 	public Bounds FillableBounds {
 		get {
-			if (fillableBounds.size.x < 1f) {
-				Vector3 size = bounds.size - Room.INSET;
-				fillableBounds = new Bounds(Vector3.zero, size);
-			}
-			return fillableBounds;
+			return bounds;
 		}
 	}
 

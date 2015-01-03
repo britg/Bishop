@@ -26,6 +26,6 @@ public class EnemyCollisionService {
 	}
 
 	public bool PlayerSurvives () {
-		return player.Swords > 0;
+		return player.isSwiping;
 	}
 }
