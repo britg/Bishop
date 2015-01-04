@@ -22,6 +22,10 @@ public class SwordSwipeController : GameController {
 				return true;
 			}
 
+			if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Space)) {
+				return true;
+			}
+
 			if (Input.touchCount > 0 && (Input.touches[0].phase == TouchPhase.Began || Input.touches[0].phase == TouchPhase.Began)) {
 				return true;
 			}

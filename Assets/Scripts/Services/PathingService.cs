@@ -67,8 +67,8 @@ public class PathingService {
 
 	public static List<Vector3> GetRoomWaypoints (Room room) {
 		List<Vector3> waypoints = new List<Vector3>();
-		for (var x = room.FillableBounds.min.x; x <= room.FillableBounds.max.x; x+= 1f) {
-			for (var z = room.FillableBounds.min.z; z <= room.FillableBounds.max.z; z += 1f) {
+		for (var x = room.bounds.min.x; x <= room.bounds.max.x; x+= 1f) {
+			for (var z = room.bounds.min.z; z <= room.bounds.max.z; z += 1f) {
 				var spot = new Vector3(x, 0f, z) + room.CurrentPosition;
 				if (isWaypoint(spot)) {
 					waypoints.Add(spot);

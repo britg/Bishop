@@ -22,7 +22,7 @@ public class GoldController : MonoBehaviour {
 	}
 
 	public void OnPickup () {
-		Invoke("Reactivate", reactivateTime);
+//		Invoke("Reactivate", reactivateTime);
 		gameObject.SetActive(false);
 	}
 

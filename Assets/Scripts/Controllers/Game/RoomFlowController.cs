@@ -25,7 +25,7 @@ public class RoomFlowController : GameController {
 	Room currentRoom {
 		get {
 			if (_currentRoom == null) {
-				_currentRoom = roomObjs[0].GetComponent<RoomController>().room;
+//				_currentRoom = roomObjs[0].GetComponent<RoomController>().room;
 			}
 			return _currentRoom;
 		}

@@ -35,11 +35,6 @@ public class Agent : GameModel {
 	public Direction CurrentDirection { get; set; }
 	public Vector3 Velocity { get { return CurrentSpeed * DirectionVector; } }
 
-	public List<Vector3> waypoints {
-		get {
-			return room.waypoints;
-		}
-	}
 	public int currentChaseIndex { get; set; }
 	public Vector3 lastWaypoint { get; set; }
 

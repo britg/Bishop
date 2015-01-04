@@ -18,7 +18,8 @@ public class PlayerController : GameController {
 		pathingService = new PathingService(player);
 
 		// Proxy for some kind of intro sequence
-		Invoke ("EnableMovement", 1f);
+//		Invoke ("EnableMovement", 1f);
+		EnableMovement();
 	}
 
 	void Update () {

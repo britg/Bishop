@@ -146,7 +146,6 @@ public class BodyController : GameController {
 
 	void DetectCastle (GameObject go) {
 		if (go.name == "Castle Door Trigger") {
-			ScrollingController.TransitionToCastle();
 		}
 	}
 

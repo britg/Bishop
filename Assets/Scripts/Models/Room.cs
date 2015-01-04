@@ -5,8 +5,14 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Room : GameModel {
 
-	public static Bounds DEFAULT_BOUNDS = new Bounds(Vector3.zero, new Vector3(18f, 0, 31f));
-	public static Vector3 INSET = new Vector3(0f, 0f, 3f);
+	public enum TileType {
+		Wall,
+		Player,
+		Enemy,
+		Walkable,
+		Margin,
+		Gold
+	}
 
 	public enum Type {
 		Open,
@@ -14,21 +20,11 @@ public class Room : GameModel {
 	}
 
 	public Type type;
+	public Bounds bounds;
+	public Level level;
+//	public TileType[,] tiles;
+	public Dictionary<Vector3, TileType> tiles;
 
 	public int enemyCount;
-	public int swordCount;
-	public int streamChance;
-	public int streamLength;
-
-	public Bounds bounds;
-
-	public List<Vector3> waypoints;
-
-	Bounds fillableBounds;
-	public Bounds FillableBounds {
-		get {
-			return bounds;
-		}
-	}
-
+	public int goldCount;
 }
