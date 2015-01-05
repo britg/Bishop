@@ -83,7 +83,7 @@ public class RoomGeneratorController : GameController {
 
 	void CullRoom () {
 		GameObject firstRoom = roomObjs[0];
-		if (firstRoom.transform.position.z < (rail.transform.position.z - 2*roomTemplate.bounds.size.z)) {
+		if (firstRoom.transform.position.z < (rail.transform.position.z - 1.5*roomTemplate.bounds.size.z)) {
 			roomObjs.Remove(firstRoom);
 			Destroy(firstRoom);
 		}
