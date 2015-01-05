@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GoldController : MonoBehaviour {
+public class GoldController : GameController {
 
 	public int goldValue = 1;
 	public int pointValue = 1;
@@ -24,6 +24,7 @@ public class GoldController : MonoBehaviour {
 	public void OnPickup () {
 //		Invoke("Reactivate", reactivateTime);
 		gameObject.SetActive(false);
+		ObjectPool.ReturnGold(gameObject);
 	}
 
 	void Reactivate () {

@@ -33,7 +33,7 @@ public class RoomGenerator {
 		room.tiles = new Dictionary<Vector3,Room.TileType>();
 		DefineWalls();
 		DefineMaze();
-		DefineWaypoints();
+//		DefineWaypoints();
 		DefineEnemies();
 		DefineGold();
 		return room;
