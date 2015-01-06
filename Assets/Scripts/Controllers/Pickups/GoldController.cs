@@ -23,8 +23,9 @@ public class GoldController : GameController {
 
 	public void OnPickup () {
 //		Invoke("Reactivate", reactivateTime);
-		gameObject.SetActive(false);
-		ObjectPool.ReturnGold(gameObject);
+//		gameObject.SetActive(false);
+//		transform.parent.gameObject.SetActive(false);
+		Destroy(transform.parent.gameObject);
 	}
 
 	void Reactivate () {

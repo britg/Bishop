@@ -28,6 +28,7 @@ public class RoomGeneratorController : GameController {
 	public GameObject enemySpawnerPrefab;
 	public GameObject waypointPrefab;
 	public GameObject goldPrefab;
+	public GameObject gemPrefab;
 
 	public GameObject leftFog;
 	public GameObject topFog;
@@ -119,11 +120,10 @@ public class RoomGeneratorController : GameController {
 
 			if (kv.Value == Room.TileType.Gold) {
 				PlaceGold(pos);
-//				PlaceWaypoint(pos);
 			}
 
-			if (kv.Value == Room.TileType.Walkable) {
-//				PlaceWaypoint(pos);
+			if (kv.Value == Room.TileType.Gem) {
+				PlaceGem(pos);
 			}
 
 		}
@@ -154,6 +154,11 @@ public class RoomGeneratorController : GameController {
 		GameObject gold = (GameObject)Instantiate(goldPrefab, pos, Quaternion.identity);
 //		GameObject gold = ObjectPool.GetGold();
 		gold.transform.SetParent(waypointContainer.transform);
+	}
+
+	void PlaceGem (Vector3 pos) {
+		GameObject gem = (GameObject)Instantiate(gemPrefab, pos, Quaternion.identity);
+		gem.transform.SetParent(waypointContainer.transform);
 	}
 
 	void StartFog (Room room) {

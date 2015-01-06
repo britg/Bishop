@@ -11,7 +11,8 @@ public class Room : GameModel {
 		Enemy,
 		Walkable,
 		Margin,
-		Gold
+		Gold,
+		Gem
 	}
 
 	public enum Type {
@@ -27,4 +28,5 @@ public class Room : GameModel {
 
 	public int enemyCount;
 	public int goldCount;
+	public int gemCount;
 }

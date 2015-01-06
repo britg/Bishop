@@ -35,7 +35,8 @@ public class RoomGenerator {
 		DefineMaze();
 //		DefineWaypoints();
 		DefineEnemies();
-		DefineGold();
+		DefinePickup(room.goldCount, Room.TileType.Gold);
+		DefinePickup(room.gemCount, Room.TileType.Gem);
 		EnsurePath();
 		return room;
 	}
@@ -152,23 +153,23 @@ public class RoomGenerator {
 		room.tiles[randomTile] = Room.TileType.Enemy;
 	}
 
-	void DefineGold () { 
-		for (int i = 0; i < room.goldCount; i++) {
-			DefineRandomGold();
+	void DefinePickup (int count, Room.TileType type) {
+		for (int i = 0; i < count; i++) {
+			DefineRandomPickup(type);
 		}
 	}
 
-	void DefineRandomGold () {
+	void DefineRandomPickup (Room.TileType type) {
 		var randomTile = RandomTile();
 		if (randomTile.z < -extents.z + 5f) {
-			DefineRandomGold();
+			DefineRandomPickup(type);
 			return;
 		}
 		if (room.tiles.ContainsKey(randomTile) && room.tiles[randomTile] != Room.TileType.Walkable) {
-			DefineRandomGold();
+			DefineRandomPickup(type);
 			return;
 		}
-		room.tiles[randomTile] = Room.TileType.Gold;
+		room.tiles[randomTile] = type;
 	}
 
 	void EnsurePath () {
