@@ -23,6 +23,7 @@ public class RoomGeneratorController : GameController {
 	public GameObject rail;
 	float nextRoomTrigger = 0f;
 	List<GameObject> roomObjs;
+	public int enemyIncreasePerRoom = 2;
 
 
 	public GameObject wallPrefab;
@@ -74,7 +75,7 @@ public class RoomGeneratorController : GameController {
 
 	void BuildRoom () {
 		roomCount++;
-		roomTemplate.enemyCount++;
+		roomTemplate.enemyCount += enemyIncreasePerRoom;
 		int seed = System.Guid.NewGuid().GetHashCode();
 //		Debug.Log ("Room seed: " + seed);
 //		seed = -1077134292;
