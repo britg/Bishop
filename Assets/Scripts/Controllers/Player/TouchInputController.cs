@@ -32,6 +32,7 @@ public class TouchInputController : GameController {
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
+		requiredSwipeDistance = Screen.height / 2000f * requiredSwipeDistance;
 	}
 	
 	// Update is called once per frame

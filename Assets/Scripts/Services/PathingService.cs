@@ -7,9 +7,11 @@ public class PathingService {
 	Agent agent;
 	float halfLaneWidth = 1f;
 	float sphereRadius = 0.005f;
+	float turnForgiveness = 0.2f;
 
-	public PathingService (Agent _agent) {
+	public PathingService (Agent _agent, float _turnForgiveness) {
 		agent = _agent;
+		turnForgiveness = _turnForgiveness;
 	}
 
 	public bool DestinationValid (Vector3 destination) {
@@ -32,7 +34,7 @@ public class PathingService {
 		Vector3 left = Vector3.zero;
 		Vector3 right = Vector3.zero;
 		Vector3 offset = Vector3.zero;
-		float testLimit = halfLaneWidth - 0.08f;
+		float testLimit = halfLaneWidth - turnForgiveness;
 
 		if (next == Agent.Direction.Right) {
 			offset = new Vector3(0f, 0f, testLimit);

@@ -10,12 +10,13 @@ public class PlayerController : GameController {
 	public AudioSource footsteps;
 	bool canMove = false;
 	PathingService pathingService;
+	public float turnForgiveness = 0.2f;
 
 	void Awake () {
 		player = new Player(playerInitialization, gameObject);
 		player.NextDirection = player.CurrentDirection;
 		player.waypointsTraversed = new List<Vector3>();
-		pathingService = new PathingService(player);
+		pathingService = new PathingService(player, turnForgiveness);
 
 		// Proxy for some kind of intro sequence
 //		Invoke ("EnableMovement", 1f);
