@@ -7,6 +7,8 @@ public class DeathController : GameController {
 	Player player;
 	public GameObject gameOverPanel;
 	public GameObject gameOverText;
+	public GameObject rail;
+	public float tooFar = 16f;
 
 	public AudioSource diedSound;
 
@@ -22,6 +24,7 @@ public class DeathController : GameController {
 		if (player.Dead && !inTransition) {
 			DoDeadTransition();
 		}
+		CheckOffScreen();
 	}
 
 	void DoDeadTransition () {
@@ -39,5 +42,14 @@ public class DeathController : GameController {
 //		gameOverPanel.SetActive(true);
 //		gameOverText.SetActive(true);
 //		inTransition = false;
+	}
+
+	void CheckOffScreen () {
+		if (rail.transform.position.z - transform.position.z > tooFar) {
+			player.Dead = true;
+			Pause();
+			gameOverPanel.SetActive(true);
+			gameOverText.SetActive(true);
+		}
 	}
 }
