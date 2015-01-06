@@ -5,6 +5,8 @@ public class FollowPlayerController : GameController {
 
 	Player player;
 
+	public float followFactor;
+
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
@@ -21,7 +23,7 @@ public class FollowPlayerController : GameController {
 
 	void LateUpdate () {
 		var newPos = transform.position;
-		newPos.x = player.CurrentPosition.x;
+		newPos.x = player.CurrentPosition.x * followFactor;
 		transform.position = newPos;
 	}
 }

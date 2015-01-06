@@ -36,6 +36,7 @@ public class RoomGenerator {
 //		DefineWaypoints();
 		DefineEnemies();
 		DefineGold();
+		EnsurePath();
 		return room;
 	}
 
@@ -86,7 +87,6 @@ public class RoomGenerator {
 			}
 		}
 
-//		ConnectRandomPillars();
 		ConnectAllPillars();
 	}
 
@@ -103,14 +103,9 @@ public class RoomGenerator {
 		}
 	}
 
-	void ConnectPillarsUniquely () {
-		foreach (Vector3 pillar in pillars) {
-			ConnectPillar(pillar, true);
-		}
-	}
 
 	List<Vector3> dirs = new List<Vector3>{ Vector3.forward, Vector3.right, Vector3.back, Vector3.left };
-	void ConnectPillar (Vector3 pillar, bool unique = false) {
+	void ConnectPillar (Vector3 pillar) {
 		Vector3 rdir = dirs[Random.Range(0, dirs.Count-1)];
 		Vector3 neighbor = rdir * 3f + pillar;
 		if (connectedPillars.Contains(neighbor)) {
@@ -174,6 +169,70 @@ public class RoomGenerator {
 			return;
 		}
 		room.tiles[randomTile] = Room.TileType.Gold;
+	}
+
+	void EnsurePath () {
+		int startX = -(int)extents.x+1;
+		Vector3 tile;
+		for (int z = -(int)extents.z; z < (int)extents.z; z++) {
+			tile = new Vector3(startX, Y, z);
+			TestStartWall(tile);
+		}
+	}
+
+	bool wallHasSpace = false;
+	List<Vector3> wallTestTiles = new List<Vector3>();
+	void TestStartWall (Vector3 tile) {
+		Room.TileType type;
+
+		if (room.tiles.ContainsKey(tile)) {
+			type = room.tiles[tile];
+			if (type == Room.TileType.Wall) {
+				Vector3 oneLeft = tile+Vector3.left;
+				wallTestTiles = new List<Vector3>{ oneLeft, tile };
+				wallHasSpace = false;
+				while (!wallHasSpace) {
+					ContinueWallTest();
+				}
+			}
+		}
+	}
+
+	void ContinueWallTest () {
+		Vector3 prevTile = wallTestTiles[wallTestTiles.Count-2];
+		Vector3 currentTile = wallTestTiles[wallTestTiles.Count-1];
+		List<Vector3> toTest = new List<Vector3>{ currentTile+Vector3.forward,
+												  currentTile+Vector3.back,
+												  currentTile+Vector3.right,
+												  currentTile+Vector3.left };
+													
+		toTest.Remove(prevTile);
+		bool atLeastOneWall = false;
+		Vector3 nextTestTile = currentTile + Vector3.right;
+		foreach (Vector3 testTile in toTest) {
+			if (room.tiles.ContainsKey(testTile) && room.tiles[testTile] == Room.TileType.Wall) {
+				atLeastOneWall = true;
+				nextTestTile = testTile;
+				if (nextTestTile.x == extents.x) {
+					Debug.Log ("Complete wall! " + nextTestTile);
+					wallTestTiles.Add(nextTestTile);
+					BreakWall();
+					return;
+				}
+			}
+		}
+
+		if (atLeastOneWall) {
+			wallTestTiles.Add(nextTestTile);
+		} else {
+			wallHasSpace = true;
+		}
+	}
+
+	void BreakWall () {
+		room.tiles[wallTestTiles[1]] = Room.TileType.Walkable;
+		room.tiles[wallTestTiles[2]] = Room.TileType.Walkable;
+		wallHasSpace = true;
 	}
 
 }

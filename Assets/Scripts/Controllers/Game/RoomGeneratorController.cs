@@ -71,9 +71,12 @@ public class RoomGeneratorController : GameController {
 	}
 
 	void BuildRoom () {
-		roomGenerator = new RoomGenerator();
+		int seed = System.Guid.NewGuid().GetHashCode();
+//		Debug.Log ("Room seed: " + seed);
+//		seed = -1077134292;
+		roomGenerator = new RoomGenerator(seed);
 		currentRoom = roomGenerator.Generate(roomTemplate);
-		PlaceRoomTemplate();
+		PlaceRoomTemplate(seed);
 		PlaceTiles();
 		currentRoomObj.GetComponent<RoomController>().Activate(currentRoom);
 		nextBuildOffset += roomTemplate.bounds.size.z;
@@ -89,8 +92,10 @@ public class RoomGeneratorController : GameController {
 		}
 	}
 
-	void PlaceRoomTemplate () {
+	void PlaceRoomTemplate (int seed) {
 		currentRoomObj = (GameObject)Instantiate(roomPrefab);
+		currentRoomObj.name = "Room: " + seed;
+		currentRoomObj.transform.SetParent(transform);
 		currentRoomObj.transform.position = new Vector3(0f, 0f, nextBuildOffset);
 		wallContainer = currentRoomObj.transform.FindChild("Walls").gameObject;
 		spawnContainer = currentRoomObj.transform.FindChild("EnemySpawns").gameObject;
