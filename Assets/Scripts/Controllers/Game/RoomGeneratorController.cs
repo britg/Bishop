@@ -9,6 +9,7 @@ public class RoomGeneratorController : GameController {
 	RoomGenerator roomGenerator;
 	Room currentRoom;
 	float nextBuildOffset = 0f;
+	int roomCount = 0;
 	GameObject currentRoomObj;
 	GameObject wallContainer;
 	GameObject spawnContainer;
@@ -72,6 +73,8 @@ public class RoomGeneratorController : GameController {
 	}
 
 	void BuildRoom () {
+		roomCount++;
+		roomTemplate.enemyCount++;
 		int seed = System.Guid.NewGuid().GetHashCode();
 //		Debug.Log ("Room seed: " + seed);
 //		seed = -1077134292;
