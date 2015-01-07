@@ -62,7 +62,7 @@ public class GameController : GameBehaviour {
 
 		}
 	}
-	public bool Paused {
+	public virtual bool Paused {
 		get {
 			if (GameRef == null) {
 				return true;
@@ -71,11 +71,11 @@ public class GameController : GameBehaviour {
 		}
 	}
 
-	public void Pause () {
+	public virtual void Pause () {
 		PauseController.Pause();
 	}
 
-	public void Unpause () {
+	public virtual void Unpause () {
 		PauseController.Unpause();
 	}
 

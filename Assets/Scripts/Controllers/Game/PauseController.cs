@@ -3,19 +3,26 @@ using System.Collections;
 
 public class PauseController : GameController {
 
-	bool paused = false;
+	public bool paused = false;
+	public GameObject pauseButton;
+	public GameObject startScreen;
 
-	public bool Paused {
+	void Start () {
+		pauseButton.SetActive(false);
+		startScreen.SetActive(true);
+	}
+
+	public override bool Paused {
 		get {
 			return paused;
 		}
 	}
 
-	public void Pause () {
+	public override void Pause () {
 		paused = true;
 	}
 
-	public void Unpause () {
+	public override void Unpause () {
 		paused = false;
 	}
 
@@ -25,6 +32,12 @@ public class PauseController : GameController {
 		} else {
 			Pause();
 		}
+	}
+
+	public void StartGame () {
+		Unpause();
+		pauseButton.SetActive(true);
+		startScreen.SetActive(false);
 	}
 }
 

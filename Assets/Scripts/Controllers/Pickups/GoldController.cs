@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GoldController : GameController {
 
-//	public int goldValue = 1;
+	public int goldValue = 1;
 	public int pointValue = 1;
 //	public float reactivateTime = 10f;
 
@@ -12,7 +12,7 @@ public class GoldController : GameController {
 	// Use this for initialization
 	void Start () {
 		gold.go = gameObject;
-//		gold.value = goldValue;
+		gold.value = goldValue;
 		gold.pointValue = pointValue;
 	}
 	

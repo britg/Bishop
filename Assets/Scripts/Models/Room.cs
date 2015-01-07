@@ -20,6 +20,8 @@ public class Room : GameModel {
 		Unlock
 	}
 
+	public int roomCount;
+
 	public Type type;
 	public Bounds bounds;
 	public Level level;

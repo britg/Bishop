@@ -18,6 +18,9 @@ public class SwordSwipeController : GameController {
 
 	bool swipe {
 		get {
+			if (Paused) {
+				return false;
+			}
 			if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0)) {
 				return true;
 			}

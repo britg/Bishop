@@ -65,17 +65,16 @@ public class RoomGeneratorController : GameController {
 	}
 
 	void ActivateNextRoom () {
-		Debug.Log ("Activating next room at " + nextRoomTrigger);
 		GameObject nextRoomObj = roomObjs[0];
 		roomObjs.Remove(nextRoomObj);
 		nextRoomObj.SetActive(true);
 		nextRoomTrigger += nextRoomObj.transform.position.z;
-		ExtendFog(nextRoomTrigger + roomTemplate.bounds.extents.z);
 	}
 
 	void BuildRoom () {
 		roomCount++;
 		roomTemplate.enemyCount += enemyIncreasePerRoom;
+		roomTemplate.roomCount = roomCount;
 		int seed = System.Guid.NewGuid().GetHashCode();
 //		Debug.Log ("Room seed: " + seed);
 //		seed = -1077134292;
@@ -141,7 +140,7 @@ public class RoomGeneratorController : GameController {
 
 	void PlacePlayer (Vector3 pos) {
 		player.go.transform.position = pos;
-		rail.transform.position = pos;
+		rail.transform.position = pos + new Vector3(0f, 0f, 10f);
 	}
 
 	void PlaceEnemySpawner (Vector3 pos) {
@@ -156,7 +155,6 @@ public class RoomGeneratorController : GameController {
 
 	void PlaceGold (Vector3 pos) {
 		GameObject gold = (GameObject)Instantiate(goldPrefab, pos, Quaternion.identity);
-//		GameObject gold = ObjectPool.GetGold();
 		gold.transform.SetParent(waypointContainer.transform);
 	}
 
@@ -168,11 +166,7 @@ public class RoomGeneratorController : GameController {
 	void StartFog (Room room) {
 		leftFog.transform.position = new Vector3(-room.bounds.extents.x-0.5f, fogHeight, 0f);
 		rightFog.transform.position = new Vector3(room.bounds.extents.x+0.5f, fogHeight, 0f);
-//		topFog.transform.position = new Vector3(0f, fogHeight, room.bounds.extents.z + 0.5f);
 		bottomFog.transform.position = new Vector3(0f, fogHeight, -room.bounds.extents.z-0.5f);
 	}
-	
-	void ExtendFog (float z) {
-//		topFog.transform.position = new Vector3(0f, fogHeight, z);
-	}
+
 }
