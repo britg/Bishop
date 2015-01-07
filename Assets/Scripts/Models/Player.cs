@@ -40,6 +40,7 @@ public class Player : Agent {
 	public int 		Hearts { get; set; }
 	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
+	public string 	DeadBy { get; set; }
 
 	public bool 	isSwiping { get; set; }
 

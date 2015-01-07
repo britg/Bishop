@@ -8,7 +8,7 @@ public class ControlsController : GameController {
 
 	// Use this for initialization
 	void Start () {
-	
+		menuPanel.SetActive(false);
 	}
 	
 	// Update is called once per frame

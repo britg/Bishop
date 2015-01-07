@@ -13,6 +13,7 @@ public class Agent : GameModel {
 	}
 
 	public Room room { get; set; }
+	public string name { get; set; }
 	public int Level { get; set; }
 	public float Courage { get; set; }
 	public float WanderSpeed { get; set; }

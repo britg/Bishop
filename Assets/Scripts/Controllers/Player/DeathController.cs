@@ -38,9 +38,10 @@ public class DeathController : GameController {
 	}
 
 	void ShowRestart () {
-		Application.LoadLevel(0);
-//		gameOverPanel.SetActive(true);
-//		gameOverText.SetActive(true);
+//		Application.LoadLevel(0);
+		gameOverPanel.SetActive(true);
+		gameOverText.SetActive(true);
+		gameOverText.GetComponent<Text>().text = "Death by " + player.DeadBy;
 //		inTransition = false;
 	}
 

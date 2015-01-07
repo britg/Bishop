@@ -16,11 +16,14 @@ public class Enemy : Agent {
 		public float detectTime;
 		public float alertTime;
 		public int pointValue;
+		public int goldValue;
+		public string name;
 
 		public Direction direction;
 	}
 
 	public int pointValue { get; set; }
+	public int goldValue { get; set; }
 
 	public Enemy (Properties props) {
 		Level = props.level;
@@ -32,6 +35,8 @@ public class Enemy : Agent {
 		DetectTime = props.detectTime;
 		AlertTime = props.alertTime;
 		pointValue = props.pointValue;
+		goldValue = props.goldValue;
+		name = props.name;
 
 		EnterState(props.state);
 	}
