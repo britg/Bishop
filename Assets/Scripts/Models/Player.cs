@@ -6,6 +6,7 @@ public class Player : Agent {
 
 	static string GOLD = "gold";
 	static string SCORE = "points";
+	static string DISTANCE = "distance";
 	static string SWORDLEVEL = "swordlevel";
 	static string HEARTS = "hearts";
 
@@ -41,6 +42,8 @@ public class Player : Agent {
 	public int 		MaxHearts { get; set; }
 	public int 		Keys { get; set; }
 	public string 	DeadBy { get; set; }
+	public float 	Distance { get; set; }
+	public float 	BestDistance { get; set; }
 
 	public bool 	isSwiping { get; set; }
 
@@ -90,15 +93,16 @@ public class Player : Agent {
 	public void Save () {
 		SaveGold();
 		SaveScore();
+		SaveDistance();
 		SaveSwordLevel();
 		SaveHearts();
 	}
 
 	public void SaveGold () {
-//		ES2.Save(Gold, GOLD);
+		ES2.Save(Gold, GOLD);
 
 		// reset gold every time for now
-		ES2.Save(0, GOLD);
+//		ES2.Save(0, GOLD);
 	}
 
 	public void SaveScore () {
@@ -112,6 +116,17 @@ public class Player : Agent {
 		ES2.Save(Points, SCORE);
 	}
 
+	public void SaveDistance () {
+		if (ES2.Exists (DISTANCE)) {
+			float prevRecord = ES2.Load<float>(DISTANCE);
+			if (Distance <= prevRecord) {
+				return;
+			}
+		} 
+		
+		ES2.Save(Distance, DISTANCE);
+	}
+
 	public void SaveSwordLevel () {
 		ES2.Save(SwordLevel, SWORDLEVEL);
 	}
@@ -123,6 +138,7 @@ public class Player : Agent {
 	public void Load () {
 		LoadGold();
 		LoadScore();
+		LoadDistance();
 		LoadSwordLevel();
 		LoadHearts();
 	}
@@ -139,6 +155,12 @@ public class Player : Agent {
 		}
 	}
 
+	void LoadDistance () {
+		if (ES2.Exists(DISTANCE)) {
+			BestDistance = ES2.Load<float>(DISTANCE);
+		}
+	}
+
 	void LoadSwordLevel () {
 		if (ES2.Exists(SWORDLEVEL)) {
 			SwordLevel = ES2.Load<int>(SWORDLEVEL);
@@ -151,9 +173,10 @@ public class Player : Agent {
 		}
 	}
 
-	void ResetSaveData () {
+	public void ResetSaveData () {
 		ES2.Delete(GOLD);
 		ES2.Delete(SCORE);
+		ES2.Delete(DISTANCE);
 		ES2.Delete(SWORDLEVEL);
 		ES2.Delete(HEARTS);
 	}

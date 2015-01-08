@@ -38,19 +38,17 @@ public class DeathController : GameController {
 	}
 
 	void ShowRestart () {
-//		Application.LoadLevel(0);
 		gameOverPanel.SetActive(true);
 		gameOverText.SetActive(true);
 		gameOverText.GetComponent<Text>().text = "Death by " + player.DeadBy;
-//		inTransition = false;
 	}
 
 	void CheckOffScreen () {
 		if (rail.transform.position.z - transform.position.z > tooFar) {
 			player.Dead = true;
+			player.DeadBy = "Tardiness";
 			Pause();
-			gameOverPanel.SetActive(true);
-			gameOverText.SetActive(true);
+			ShowRestart();
 		}
 	}
 }

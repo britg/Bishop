@@ -3,13 +3,21 @@ using System.Collections;
 
 public class PauseController : GameController {
 
+	Player player;
 	public bool paused = false;
 	public GameObject pauseButton;
 	public GameObject startScreen;
 
 	void Start () {
+		player = GetPlayer();
 		pauseButton.SetActive(false);
 		startScreen.SetActive(true);
+	}
+
+	void Update () {
+		if (player.Dead) {
+			pauseButton.SetActive(false);
+		}
 	}
 
 	public override bool Paused {

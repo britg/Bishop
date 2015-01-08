@@ -12,7 +12,7 @@ public class GoldController : GameController {
 	// Use this for initialization
 	void Start () {
 		gold.go = gameObject;
-		gold.value = goldValue;
+		gold.goldValue = goldValue;
 		gold.pointValue = pointValue;
 	}
 	

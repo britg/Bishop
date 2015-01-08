@@ -32,12 +32,6 @@ public class RoomGeneratorController : GameController {
 	public GameObject goldPrefab;
 	public GameObject gemPrefab;
 
-	public GameObject leftFog;
-	public GameObject topFog;
-	public GameObject rightFog;
-	public GameObject bottomFog;
-
-
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
@@ -47,7 +41,6 @@ public class RoomGeneratorController : GameController {
 		}
 		nextRoomTrigger = roomTemplate.bounds.size.z * (roomCountToGenerate-2);
 		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
-		StartFog(roomTemplate);
 //		ActivateNextRoom();
 	}
 	
@@ -161,12 +154,6 @@ public class RoomGeneratorController : GameController {
 	void PlaceGem (Vector3 pos) {
 		GameObject gem = (GameObject)Instantiate(gemPrefab, pos, Quaternion.identity);
 		gem.transform.SetParent(waypointContainer.transform);
-	}
-
-	void StartFog (Room room) {
-		leftFog.transform.position = new Vector3(-room.bounds.extents.x-0.5f, fogHeight, 0f);
-		rightFog.transform.position = new Vector3(room.bounds.extents.x+0.5f, fogHeight, 0f);
-		bottomFog.transform.position = new Vector3(0f, fogHeight, -room.bounds.extents.z-0.5f);
 	}
 
 }

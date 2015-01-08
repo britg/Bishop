@@ -12,7 +12,9 @@ public class PlayerPropertyView : GameBehaviour {
 		Swords,
 		Hearts,
 		HighScore,
-		Keys
+		Keys,
+		Distance,
+		BestDistance
 	}
 
 	Player player;
@@ -51,6 +53,10 @@ public class PlayerPropertyView : GameBehaviour {
 			textView.text = string.Format("{0}", player.HighScore);
 		} else if (propertyToWatch == Property.Keys) {
 			textView.text = string.Format("{0}", player.Keys);
+		} else if (propertyToWatch == Property.Distance) {
+			textView.text = string.Format("{0}m", player.Distance.ToString("F0"));
+		} else if (propertyToWatch == Property.BestDistance) {
+			textView.text = string.Format("{0}m", player.BestDistance.ToString("F0"));
 		}
 
 	}
