@@ -83,6 +83,14 @@ public class GameController : GameBehaviour {
 		PauseController.StartGame();
 	}
 
+	public virtual void ShowDaily () {
+		PauseController.ShowDaily();
+	}
+
+	public virtual void ShowNormal () {
+		PauseController.ShowNormal();
+	}
+
 	ScrollController scrollingController;
 	public ScrollController ScrollingController {
 		get {

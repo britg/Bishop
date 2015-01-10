@@ -39,17 +39,23 @@ public class RoomGeneratorController : GameController {
 	void Start () {
 		player = GetPlayer();
 		roomObjs = new List<GameObject>();
-		seed = System.Guid.NewGuid().GetHashCode();
-		BuildRooms();
-		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
+		BuildNormal();
 	}
 
-	public void StartDaily () {
+	public void BuildNormal () {
+		seed = System.Guid.NewGuid().GetHashCode();
+		RemoveExistingRooms();
+		BuildRooms();
+		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
+		ShowNormal();
+	}
+
+	public void BuildDaily () {
 		seed = ES2.Load<int>(DailyApiController.DAILY_SEED);
 		RemoveExistingRooms();
 		BuildRooms();
 		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
-		StartGame();
+		ShowDaily();
 	}
 
 	void RemoveExistingRooms () {
