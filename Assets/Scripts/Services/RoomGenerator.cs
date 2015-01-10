@@ -5,8 +5,9 @@ using System.Collections.Generic;
 public class RoomGenerator {
 
 	float Y = 0f;
-
 	Room room;
+
+	public float keyRoomChance;
 
 	Vector3 size {
 		get {
@@ -33,11 +34,11 @@ public class RoomGenerator {
 		room.tiles = new Dictionary<Vector3,Room.TileType>();
 		DefineWalls();
 		DefineMaze();
-//		DefineWaypoints();
 		DefineEnemies();
 		DefinePickup(room.goldCount, Room.TileType.Gold);
 		DefinePickup(room.gemCount, Room.TileType.Gem);
 		EnsurePath();
+		DefineKeyRoom();
 		return room;
 	}
 
@@ -234,6 +235,37 @@ public class RoomGenerator {
 		room.tiles[wallTestTiles[1]] = Room.TileType.Walkable;
 		room.tiles[wallTestTiles[2]] = Room.TileType.Walkable;
 		wallHasSpace = true;
+	}
+
+	void DefineKeyRoom () {
+		if (!GameBehaviour.Roll(keyRoomChance)) {
+			return;
+		}
+
+		Debug.Log ("Generating a Key Room");
+		float z = extents.z;
+		Vector3 tile;
+		for (float x = -extents.x; x <= extents.x; x += 1f) {
+			tile = new Vector3(x, Y, z);
+			room.tiles[tile] = Room.TileType.Wall;
+		}
+
+		Vector3 doorStartTile = new Vector3(0f, Y, z);
+		List<Vector3> doorTiles = new List<Vector3>{
+			doorStartTile,
+			doorStartTile + Vector3.right,
+			doorStartTile + Vector3.right + Vector3.back,
+			doorStartTile + Vector3.right + Vector3.back*2,
+			doorStartTile + Vector3.back,
+			doorStartTile + Vector3.back*2
+		};
+
+		foreach (Vector3 doorTile in doorTiles) {
+			room.tiles[doorTile] = Room.TileType.Walkable;
+		}
+
+		room.tiles[doorStartTile - new Vector3(0.5f, 0f, 0f)] = Room.TileType.Door;
+		DefinePickup(1, Room.TileType.Key);
 	}
 
 }

@@ -14,37 +14,53 @@ public class RoomGeneratorController : GameController {
 	GameObject wallContainer;
 	GameObject spawnContainer;
 	GameObject waypointContainer;
+	float nextRoomTrigger = 0f;
+	List<GameObject> roomObjs;
 
+	int seed;
 	public Room roomTemplate;
 
 	public float fogHeight = 3f;
 	public GameObject roomPrefab;
 	public int roomCountToGenerate;
 	public GameObject rail;
-	float nextRoomTrigger = 0f;
-	List<GameObject> roomObjs;
 	public int enemyIncreasePerRoom = 2;
-
+	public float keyRoomChance;
 
 	public GameObject wallPrefab;
 	public GameObject enemySpawnerPrefab;
 	public GameObject waypointPrefab;
 	public GameObject goldPrefab;
 	public GameObject gemPrefab;
+	public GameObject doorPrefab;
+	public GameObject keyPrefab;
 
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
 		roomObjs = new List<GameObject>();
-		for (int i = 0; i < roomCountToGenerate; i++) {
-			BuildRoom();
-		}
-		nextRoomTrigger = roomTemplate.bounds.size.z * (roomCountToGenerate-2);
+		seed = System.Guid.NewGuid().GetHashCode();
+		BuildRooms();
 		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
-//		ActivateNextRoom();
 	}
-	
-	// Update is called once per frame
+
+	public void StartDaily () {
+		seed = ES2.Load<int>(DailyApiController.DAILY_SEED);
+		RemoveExistingRooms();
+		BuildRooms();
+		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
+		StartGame();
+	}
+
+	void RemoveExistingRooms () {
+		roomObjs = new List<GameObject>();
+		foreach (Transform child in transform) {
+			Destroy(child.gameObject);
+		}
+
+		nextBuildOffset = 0f;
+	}
+
 	void Update () {
 		CheckRailPosition();
 	}
@@ -64,14 +80,21 @@ public class RoomGeneratorController : GameController {
 		nextRoomTrigger += nextRoomObj.transform.position.z;
 	}
 
+	void BuildRooms () {
+		for (int i = 0; i < roomCountToGenerate; i++) {
+			BuildRoom();
+		}
+		nextRoomTrigger = roomTemplate.bounds.size.z * (roomCountToGenerate-2);
+	}
+
+
 	void BuildRoom () {
+		Debug.Log ("Room seed: " + seed);
 		roomCount++;
 		roomTemplate.enemyCount += enemyIncreasePerRoom;
 		roomTemplate.roomCount = roomCount;
-		int seed = System.Guid.NewGuid().GetHashCode();
-//		Debug.Log ("Room seed: " + seed);
-//		seed = -1077134292;
 		roomGenerator = new RoomGenerator(seed);
+		roomGenerator.keyRoomChance = keyRoomChance;
 		currentRoom = roomGenerator.Generate(roomTemplate);
 		PlaceRoomTemplate(seed);
 		PlaceTiles();
@@ -79,6 +102,7 @@ public class RoomGeneratorController : GameController {
 		nextBuildOffset += roomTemplate.bounds.size.z;
 		nextRoomTrigger += roomTemplate.bounds.size.z;
 		roomObjs.Add(currentRoomObj);
+		seed++;
 	}
 
 	void CullRoom () {
@@ -101,27 +125,36 @@ public class RoomGeneratorController : GameController {
 
 
 	void PlaceTiles () {
+		Vector3 pos;
 		Room.TileType type;
 		foreach (KeyValuePair<Vector3, Room.TileType> kv in currentRoom.tiles) {
-			var pos = kv.Key;
+			pos = kv.Key;
+			type = kv.Value;
 			pos.z += nextBuildOffset;
-			if (kv.Value == Room.TileType.Wall) {
+			if (type == Room.TileType.Wall) {
 				PlaceWall(pos);
 			}
 
-			if (kv.Value == Room.TileType.Enemy) {
+			if (type == Room.TileType.Enemy) {
 				PlaceEnemySpawner(pos);
 //				PlaceWaypoint(pos);
 			}
 
-			if (kv.Value == Room.TileType.Gold) {
+			if (type == Room.TileType.Gold) {
 				PlaceGold(pos);
 			}
 
-			if (kv.Value == Room.TileType.Gem) {
+			if (type == Room.TileType.Gem) {
 				PlaceGem(pos);
 			}
 
+			if (type == Room.TileType.Door) {
+				PlaceDoor(pos);
+			}
+
+			if (type == Room.TileType.Key) {
+				PlaceKey(pos);
+			}
 		}
 	}
 
@@ -154,6 +187,16 @@ public class RoomGeneratorController : GameController {
 	void PlaceGem (Vector3 pos) {
 		GameObject gem = (GameObject)Instantiate(gemPrefab, pos, Quaternion.identity);
 		gem.transform.SetParent(waypointContainer.transform);
+	}
+
+	void PlaceDoor (Vector3 pos) {
+		GameObject door = (GameObject)Instantiate(doorPrefab, pos, Quaternion.identity);
+		door.transform.SetParent(waypointContainer.transform);
+	}
+
+	void PlaceKey (Vector3 pos) {
+		GameObject key = (GameObject)Instantiate(keyPrefab, pos, Quaternion.identity);
+		key.transform.SetParent(waypointContainer.transform);
 	}
 
 }

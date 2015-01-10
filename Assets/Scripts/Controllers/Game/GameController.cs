@@ -79,6 +79,10 @@ public class GameController : GameBehaviour {
 		PauseController.Unpause();
 	}
 
+	public virtual void StartGame () {
+		PauseController.StartGame();
+	}
+
 	ScrollController scrollingController;
 	public ScrollController ScrollingController {
 		get {

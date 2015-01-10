@@ -30,10 +30,10 @@ public class PlayerDetectController : GameController {
 	
 	void ContinueDetect () {
 		var origin = transform.position;
-		RaycastHit[] forwardHits = Physics.RaycastAll (transform.position, Vector3.forward, agent.DetectRadius);
-		RaycastHit[] backHits = Physics.RaycastAll (transform.position, Vector3.back, agent.DetectRadius);
-		RaycastHit[] rightHits = Physics.RaycastAll (transform.position, Vector3.right, agent.DetectRadius);
-		RaycastHit[] leftHits = Physics.RaycastAll (transform.position, Vector3.left, agent.DetectRadius);
+		RaycastHit[] forwardHits = Physics.RaycastAll (origin, Vector3.forward, agent.DetectRadius);
+		RaycastHit[] backHits = Physics.RaycastAll (origin, Vector3.back, agent.DetectRadius);
+		RaycastHit[] rightHits = Physics.RaycastAll (origin, Vector3.right, agent.DetectRadius);
+		RaycastHit[] leftHits = Physics.RaycastAll (origin, Vector3.left, agent.DetectRadius);
 
 		bool forward = ScanHits(forwardHits);
 		bool back = ScanHits(backHits);

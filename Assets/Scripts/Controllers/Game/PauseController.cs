@@ -42,7 +42,7 @@ public class PauseController : GameController {
 		}
 	}
 
-	public void StartGame () {
+	public override void StartGame () {
 		Unpause();
 		pauseButton.SetActive(true);
 		startScreen.SetActive(false);

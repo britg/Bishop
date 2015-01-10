@@ -8,4 +8,8 @@ public class GameBehaviour : MonoBehaviour {
 		var playerController = playerObj.GetComponent<PlayerController>();
 		return playerController.player;
 	}
+
+	public static bool Roll (float against) {
+		return Random.value * 100f < against;
+	}
 }

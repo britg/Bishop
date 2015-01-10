@@ -12,7 +12,9 @@ public class Room : GameModel {
 		Walkable,
 		Margin,
 		Gold,
-		Gem
+		Gem,
+		Door,
+		Key
 	}
 
 	public enum Type {
