@@ -182,11 +182,19 @@ public class Player : Agent {
 		ES2.Delete(DISTANCE);
 		ES2.Delete(SWORDLEVEL);
 		ES2.Delete(HEARTS);
+		ES2.Delete(LAST_DAILY_ATTEMPT);
 	}
 
 	public void RecordLastDailySeed () {
 		lastDailySeedAttempted = ES2.Load<int>(DailyApiController.DAILY_SEED);
 		ES2.Save(lastDailySeedAttempted, LAST_DAILY_ATTEMPT);
+	}
+
+	public void ReverseLastDailySeed () {
+		if (ES2.Exists(LAST_DAILY_ATTEMPT)) {
+			ES2.Delete(LAST_DAILY_ATTEMPT);
+			lastDailySeedAttempted = 0;
+		}
 	}
 
 	void LoadLastDailyAttempt () {

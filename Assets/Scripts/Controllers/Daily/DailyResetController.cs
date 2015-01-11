@@ -7,6 +7,8 @@ public class DailyResetController : GameController {
 	Player player;
 	public Text resetTime;
 	public GameObject explainerText;
+	public GameObject lastRunStats;
+	public GameObject tryAgain;
 	public GameObject startButton;
 
 	// Use this for initialization
@@ -25,10 +27,17 @@ public class DailyResetController : GameController {
 		resetTime.text = string.Format("Resets in: {0}", DailyApiController.resetTime);
 	}
 
-	void DetectAttempted () {
+	public void DetectAttempted () {
 		if (player.attemptedDaily) {
 			startButton.SetActive(false);
 			explainerText.SetActive(false);
+			lastRunStats.SetActive(true);
+			tryAgain.SetActive(true);
+		} else {
+			startButton.SetActive(true);
+			explainerText.SetActive(true);
+			lastRunStats.SetActive(false);
+			tryAgain.SetActive(false);
 		}
 	}
 }
