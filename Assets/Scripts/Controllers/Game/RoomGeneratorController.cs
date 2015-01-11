@@ -65,6 +65,8 @@ public class RoomGeneratorController : GameController {
 		}
 
 		nextBuildOffset = 0f;
+		roomTemplate.enemyCount = 0;
+		roomCount = 0;
 	}
 
 	void Update () {

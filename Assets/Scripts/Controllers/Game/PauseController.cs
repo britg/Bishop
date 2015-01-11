@@ -5,6 +5,7 @@ public class PauseController : GameController {
 
 	Player player;
 	public bool paused = false;
+	public bool isDaily = false;
 	public GameObject pauseButton;
 	public GameObject startScreen;
 	public GameObject dailyScreen;
@@ -49,9 +50,14 @@ public class PauseController : GameController {
 		pauseButton.SetActive(true);
 		startScreen.SetActive(false);
 		dailyScreen.SetActive(false);
+
+		if (isDaily) {
+			player.RecordLastDailySeed();
+		}
 	}
 
 	public override void ShowDaily () {
+		isDaily = true;
 		Pause();
 		pauseButton.SetActive(false);
 		startScreen.SetActive(false);
@@ -59,6 +65,7 @@ public class PauseController : GameController {
 	}
 
 	public override void ShowNormal () {
+		isDaily = false;
 		Pause();
 		pauseButton.SetActive(false);
 		startScreen.SetActive(true);

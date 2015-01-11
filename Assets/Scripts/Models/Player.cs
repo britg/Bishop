@@ -9,6 +9,7 @@ public class Player : Agent {
 	static string DISTANCE = "distance";
 	static string SWORDLEVEL = "swordlevel";
 	static string HEARTS = "hearts";
+	static string LAST_DAILY_ATTEMPT = "lastdailyattempt";
 
 	[System.Serializable]
 	public class Properties {
@@ -44,6 +45,7 @@ public class Player : Agent {
 	public string 	DeadBy { get; set; }
 	public float 	Distance { get; set; }
 	public float 	BestDistance { get; set; }
+	public int		lastDailySeedAttempted { get; set; }
 
 	public bool 	isSwiping { get; set; }
 
@@ -141,6 +143,7 @@ public class Player : Agent {
 		LoadDistance();
 		LoadSwordLevel();
 		LoadHearts();
+		LoadLastDailyAttempt();
 	}
 
 	void LoadGold () {
@@ -179,6 +182,25 @@ public class Player : Agent {
 		ES2.Delete(DISTANCE);
 		ES2.Delete(SWORDLEVEL);
 		ES2.Delete(HEARTS);
+	}
+
+	public void RecordLastDailySeed () {
+		lastDailySeedAttempted = ES2.Load<int>(DailyApiController.DAILY_SEED);
+		ES2.Save(lastDailySeedAttempted, LAST_DAILY_ATTEMPT);
+	}
+
+	void LoadLastDailyAttempt () {
+		if (ES2.Exists(LAST_DAILY_ATTEMPT)) {
+			lastDailySeedAttempted = ES2.Load<int>(LAST_DAILY_ATTEMPT);
+		} else {
+			lastDailySeedAttempted = 0;
+		}
+	}
+
+	public bool attemptedDaily {
+		get {
+			return lastDailySeedAttempted == ES2.Load<int>(DailyApiController.DAILY_SEED);
+		}
 	}
 
 }
