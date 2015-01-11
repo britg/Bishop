@@ -8,12 +8,18 @@ public class DailyApiController : GameController {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine(GetDailySeed());
+		LocalDailySeed();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void LocalDailySeed () {
+		int seed = (int)System.DateTime.UtcNow.Date.Ticks;
+		Debug.Log ("Seed is " + seed);
+		SaveSeed(seed);
 	}
 
 	IEnumerator GetDailySeed () {
