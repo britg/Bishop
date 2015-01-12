@@ -16,6 +16,7 @@ public class GoldPickupService {
 	public void Pickup () {
 		player.Points += gold.pointValue;
 		player.Gold += gold.goldValue;
+		player.runStats.AddGold(gold.goldValue);
 	}
 
 	void ContinueCombo () {

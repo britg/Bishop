@@ -26,6 +26,7 @@ public class ScrollController : GameController {
 		Vector3 frameMove = scrollSpeed * Time.deltaTime;
 		transform.position += frameMove;
 		player.Distance += frameMove.z;
+		player.runStats.AddDistance(frameMove.z);
 
 		if (scrollSpeed.z < maxSpeed.z) {
 			scrollSpeed += scrollAccel * Time.deltaTime;

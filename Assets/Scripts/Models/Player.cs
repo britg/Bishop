@@ -49,6 +49,9 @@ public class Player : Agent {
 
 	public bool 	isSwiping { get; set; }
 
+	public RunStats runStats { get; set; }
+	public Armory armory { get; set; }
+	
 	public WaypointService waypointService;
 	public List<Vector3> waypointsTraversed { get; set; }
 	public Vector3 lastWaypointTraversed {
@@ -98,6 +101,7 @@ public class Player : Agent {
 		SaveDistance();
 		SaveSwordLevel();
 		SaveHearts();
+		runStats.Save();
 	}
 
 	public void SaveGold () {
@@ -144,6 +148,9 @@ public class Player : Agent {
 		LoadSwordLevel();
 		LoadHearts();
 		LoadLastDailyAttempt();
+		runStats = RunStats.LastRun();
+		armory = Armory.PlayerArmory();
+		Debug.Log ("last run stats " + runStats);
 	}
 
 	void LoadGold () {
@@ -196,6 +203,11 @@ public class Player : Agent {
 			lastDailySeedAttempted = 0;
 		}
 	}
+
+	public void StartNewRun () {
+		runStats = new RunStats();
+	}
+
 
 	void LoadLastDailyAttempt () {
 		if (ES2.Exists(LAST_DAILY_ATTEMPT)) {

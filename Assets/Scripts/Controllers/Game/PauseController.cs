@@ -47,6 +47,7 @@ public class PauseController : GameController {
 
 	public override void StartGame () {
 		Unpause();
+		player.StartNewRun();
 		pauseButton.SetActive(true);
 		startScreen.SetActive(false);
 		dailyScreen.SetActive(false);

@@ -40,13 +40,13 @@ public class DeathController : GameController {
 	void ShowRestart () {
 		gameOverPanel.SetActive(true);
 		gameOverText.SetActive(true);
-		gameOverText.GetComponent<Text>().text = "Death by " + player.DeadBy;
+		gameOverText.GetComponent<Text>().text = "Death by " + player.runStats.killedBy;
 	}
 
 	void CheckOffScreen () {
 		if (rail.transform.position.z - transform.position.z > tooFar) {
 			player.Dead = true;
-			player.DeadBy = "Tardiness";
+			player.runStats.killedBy = "Scroll Demon";
 			Pause();
 			ShowRestart();
 		}
