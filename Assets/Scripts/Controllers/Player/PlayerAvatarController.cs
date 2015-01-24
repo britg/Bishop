@@ -13,7 +13,7 @@ public class PlayerAvatarController : GameController {
 	
 	// Update is called once per frame
 	void Update () {
-		ShowHideSword();
+		//ShowHideSword();
 	}
 
 	void ShowHideSword () {

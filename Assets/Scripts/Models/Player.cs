@@ -47,7 +47,7 @@ public class Player : Agent {
 	public float 	BestDistance { get; set; }
 	public int		lastDailySeedAttempted { get; set; }
 
-	public bool 	isSwiping { get; set; }
+	public bool 	isAttacking { get; set; }
 
 	public RunStats runStats { get; set; }
 	public Armory armory { get; set; }

@@ -48,14 +48,14 @@ public class SwordSwipeController : GameController {
 			Swipe();
 		}
 
-		if (player.isSwiping) {
+		if (player.isAttacking) {
 			UpdateSwipeTime();
 		}
 	}
 
 	void Swipe () {
 		currentSwipeTime = 0f;
-		player.isSwiping = true;
+		player.isAttacking = true;
 		isAnimating = true;
 		Vector3 pos;
 		if (swordPos == 0) {
@@ -83,7 +83,7 @@ public class SwordSwipeController : GameController {
 	void UpdateSwipeTime () {
 		currentSwipeTime += Time.deltaTime;
 		if (currentSwipeTime >= swipeDuration) {
-			player.isSwiping = false;
+			player.isAttacking = false;
 			currentSwipeTime = 0f;
 		}
 	}

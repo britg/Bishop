@@ -29,6 +29,6 @@ public class EnemyCollisionService {
 	}
 
 	public bool PlayerSurvives () {
-		return player.isSwiping;
+		return player.isAttacking;
 	}
 }
