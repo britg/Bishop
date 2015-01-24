@@ -11,6 +11,7 @@ public class AttackController : GameController {
     float currentAttackTime = 0f;
 
     public Vector3 scaleAmount = new Vector3(1f,1f, 1f);
+    public GameObject body;
 
 
     bool attackInput {
@@ -55,10 +56,11 @@ public class AttackController : GameController {
         isAnimating = true;
 
         // Do the pulse (change scale)
-        iTween.ShakeScale(gameObject, iTween.Hash(
+        iTween.ShakeScale(body, iTween.Hash(
             "time", attackAnimation,
             "amount", scaleAmount, 
-            "oncomplete", "OnAttackComplete"));
+            "oncomplete", "OnAttackComplete",
+            "oncompletetarget", gameObject));
 
     }
 
