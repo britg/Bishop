@@ -7,7 +7,6 @@ public class PlayerController : GameController {
 	public Player player;
 	public Player.Properties playerInitialization;
 	public float playerAccel;
-	public AudioSource footsteps;
 	bool canMove = false;
 	PathingService pathingService;
 	public float turnForgiveness = 0.2f;
@@ -24,26 +23,11 @@ public class PlayerController : GameController {
 	}
 
 	void Update () {
-		if (Paused) {
-			if (footsteps.isPlaying) {
-				footsteps.Stop();
-			}
-			return;
-		}
 		CheckDead();
 		LockLane();
 
 		if (ShouldTurn() && CanTurn()) {
 			Turn();
-		}
-
-		if (player.CurrentDirection == Player.Direction.Stop) {
-			footsteps.Stop();
-			return;
-		} else {
-			if (!footsteps.isPlaying) {
-				footsteps.Play();
-			}
 		}
 
 		if (CanMove()) {
