@@ -13,5 +13,6 @@ public class InstantDeathService {
 	
 	public void Collide () {
 		player.Dead = true;
+        player.runStats.killedBy = "Scroll Demon";
 	}
 }

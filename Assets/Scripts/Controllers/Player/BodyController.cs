@@ -17,6 +17,8 @@ public class BodyController : GameController {
     public float goldPickupY = 3f;
 	public float itemPickupTime = 0.3f;
 
+    public int doorCost = 20;
+
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
@@ -138,8 +140,8 @@ public class BodyController : GameController {
 
 	void DetectDoor (GameObject go) {
 		if (go.name == "Door Trigger") {
-			if (player.Keys > 0) {
-				player.Keys -= 1;
+			if (player.Gold > doorCost) {
+				player.Gold -= doorCost;
 				Destroy(go.transform.parent.gameObject);
 			}
 		}

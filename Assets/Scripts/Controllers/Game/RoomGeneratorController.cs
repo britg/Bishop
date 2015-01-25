@@ -102,6 +102,13 @@ public class RoomGeneratorController : GameController {
 		roomTemplate.enemyCount += enemyIncreasePerRoom;
 		roomTemplate.roomCount = roomCount;
 		roomGenerator = new RoomGenerator(seed);
+
+        // Force a door ever 3 rooms
+        if (roomCount % 3 == 0) {
+            keyRoomChance = 100f;
+        } else {
+            keyRoomChance = 0f;
+        }
 		roomGenerator.keyRoomChance = keyRoomChance;
 		currentRoom = roomGenerator.Generate(roomTemplate);
 		PlaceRoomTemplate(seed);
@@ -110,6 +117,7 @@ public class RoomGeneratorController : GameController {
 		nextBuildOffset += roomTemplate.bounds.size.z;
 		nextRoomTrigger += roomTemplate.bounds.size.z;
 		roomObjs.Add(currentRoomObj);
+        //CombineMeshes();
 		seed++;
 	}
 
@@ -206,5 +214,23 @@ public class RoomGeneratorController : GameController {
 		GameObject key = (GameObject)Instantiate(keyPrefab, pos, Quaternion.identity);
 		key.transform.SetParent(waypointContainer.transform);
 	}
+
+    void CombineMeshes () {
+        MeshFilter[] meshFilters = wallContainer.GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+        int i = 0;
+        while (i < meshFilters.Length) {
+            combine[i].mesh = meshFilters[i].sharedMesh;
+            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+            Destroy(meshFilters[i].gameObject);
+            i++;
+        }
+        var meshFilter = wallContainer.AddComponent<MeshFilter>();
+        meshFilter.mesh = new Mesh();
+        meshFilter.mesh.CombineMeshes(combine, true);
+
+        wallContainer.AddComponent<MeshCollider>();
+        //wallContainer.transform.gameObject.SetActive(true);
+    }
 
 }

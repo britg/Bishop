@@ -96,7 +96,7 @@ public class Player : Agent {
 	}
 
 	public void Save () {
-		SaveGold();
+		//SaveGold();
 		SaveScore();
 		SaveDistance();
 		SaveSwordLevel();
@@ -154,9 +154,10 @@ public class Player : Agent {
 	}
 
 	void LoadGold () {
-		if (ES2.Exists(GOLD)) {
-			Gold = ES2.Load<int>(GOLD);
-		}
+        Gold = 0;
+		//if (ES2.Exists(GOLD)) {
+			//Gold = ES2.Load<int>(GOLD);
+		//}
 	}
 
 	void LoadScore () {

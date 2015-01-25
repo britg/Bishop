@@ -24,7 +24,7 @@ public class DeathController : GameController {
 		if (player.Dead && !inTransition) {
 			DoDeadTransition();
 		}
-		CheckOffScreen();
+		//CheckOffScreen();
 	}
 
 	void DoDeadTransition () {
