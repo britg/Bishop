@@ -14,6 +14,7 @@ public class BodyController : GameController {
 	public GameObject playerGold;
 
 	public float goldPickupTime = 0.2f;
+    public float goldPickupY = 3f;
 	public float itemPickupTime = 0.3f;
 
 	// Use this for initialization
@@ -61,7 +62,7 @@ public class BodyController : GameController {
 		goldAnimating = true;
 		iTween.MoveBy (playerGold, iTween.Hash (
 			"islocal", true,
-			"y", 2f,
+			"y", goldPickupY,
 			"time", goldPickupTime,
 			"oncomplete", "ResetGold",
 			"oncompletetarget", gameObject));
