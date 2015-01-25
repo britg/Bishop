@@ -265,7 +265,7 @@ public class RoomGenerator {
 		}
 
 		room.tiles[doorStartTile - new Vector3(0.5f, 0f, 0f)] = Room.TileType.Door;
-		DefinePickup(1, Room.TileType.Key);
+		//DefinePickup(1, Room.TileType.Key);
 	}
 
 }

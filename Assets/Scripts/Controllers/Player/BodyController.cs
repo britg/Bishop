@@ -140,10 +140,14 @@ public class BodyController : GameController {
 
 	void DetectDoor (GameObject go) {
 		if (go.name == "Door Trigger") {
-			if (player.Gold > doorCost) {
-				player.Gold -= doorCost;
-				Destroy(go.transform.parent.gameObject);
-			}
+            var doorController = go.GetComponent<DoorController>();
+            Door door = doorController.door;
+			if (player.Gold > door.goldCost) {
+				player.Gold -= door.goldCost;
+                doorController.OnOpen();
+            } else {
+                doorController.OnNotOpen();
+            }
 		}
 	}
 
