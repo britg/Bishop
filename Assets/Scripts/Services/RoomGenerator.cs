@@ -36,7 +36,7 @@ public class RoomGenerator {
 		DefineMaze();
 		DefineEnemies();
 		DefinePickup(room.goldCount, Room.TileType.Gold);
-		DefinePickup(room.gemCount, Room.TileType.Gem);
+		//DefinePickup(room.gemCount, Room.TileType.Gem);
 		EnsurePath();
 		DefineKeyRoom();
 		return room;

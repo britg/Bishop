@@ -68,10 +68,6 @@ public class BodyController : GameController {
 			"time", goldPickupTime,
 			"oncomplete", "ResetGold",
 			"oncompletetarget", gameObject));
-		iTween.RotateBy (playerGold, iTween.Hash (
-			"islocal", true,
-			"y", 1f,
-			"time", goldPickupTime));
 	}
 
 	void ResetGold () {
@@ -140,7 +136,7 @@ public class BodyController : GameController {
 
 	void DetectDoor (GameObject go) {
 		if (go.name == "Door Trigger") {
-            var doorController = go.GetComponent<DoorController>();
+            var doorController = go.transform.parent.GetComponent<DoorController>();
             Door door = doorController.door;
 			if (player.Gold > door.goldCost) {
 				player.Gold -= door.goldCost;
