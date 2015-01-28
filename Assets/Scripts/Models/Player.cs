@@ -220,7 +220,11 @@ public class Player : Agent {
 
 	public bool attemptedDaily {
 		get {
-			return lastDailySeedAttempted == ES2.Load<int>(DailyApiController.DAILY_SEED);
+			if (ES2.Exists (DailyApiController.DAILY_SEED)) {
+				return lastDailySeedAttempted == ES2.Load<int>(DailyApiController.DAILY_SEED);
+			} else {
+				return false;
+			}
 		}
 	}
 
