@@ -181,8 +181,8 @@ public class RoomGeneratorController : GameController {
 	}
 
 	void PlacePlayer (Vector3 pos) {
-		player.go.transform.position = pos;
-		rail.transform.position = pos + new Vector3(0f, 0f, 10f);
+		//player.go.transform.position = pos;
+		//rail.transform.position = pos + new Vector3(0f, 0f, 10f);
 	}
 
 	void PlaceEnemySpawner (Vector3 pos) {
