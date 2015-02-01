@@ -63,7 +63,7 @@ public class RoomFlowController : GameController {
 
 		foreach(GameObject roomObj in roomsToDestroy) {
 			roomObjs.Remove(roomObj);
-			Destroy(roomObj);
+			RemoveRoomObject (roomObj);
 		}
 	}
 
@@ -84,5 +84,13 @@ public class RoomFlowController : GameController {
 
 	void PlacePlayer () {
 		player.room = currentRoom;
+	}
+
+	void RemoveRoomObject (GameObject roomObj) {
+		Transform walls = roomObj.transform.FindChild("Walls");
+		foreach (Transform wall in walls) {
+			ObjectPool.ReturnWall(wall.gameObject);
+		}
+		Destroy(roomObj);
 	}
 }

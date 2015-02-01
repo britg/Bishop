@@ -125,8 +125,16 @@ public class RoomGeneratorController : GameController {
 		GameObject firstRoom = roomObjs[0];
 		if (firstRoom.transform.position.z < (rail.transform.position.z - 1.5*roomTemplate.bounds.size.z)) {
 			roomObjs.Remove(firstRoom);
-			Destroy(firstRoom);
+			RemoveRoomObject(firstRoom);
 		}
+	}
+
+	void RemoveRoomObject (GameObject roomObj) {
+		Transform walls = roomObj.transform.FindChild("Walls");
+		foreach (Transform wall in walls) {
+			ObjectPool.ReturnWall(wall.gameObject);
+		}
+		Destroy(roomObj);
 	}
 
 	void PlaceRoomTemplate (int seed) {
@@ -143,12 +151,14 @@ public class RoomGeneratorController : GameController {
 	void PlaceTiles () {
 		Vector3 pos;
 		Room.TileType type;
+		List<Vector3> wallCenterPoints = new List<Vector3>();
 		foreach (KeyValuePair<Vector3, Room.TileType> kv in currentRoom.tiles) {
 			pos = kv.Key;
 			type = kv.Value;
 			pos.z += nextBuildOffset;
 			if (type == Room.TileType.Wall) {
 				PlaceWall(pos);
+				wallCenterPoints.Add(pos);
 			}
 
 			if (type == Room.TileType.Enemy) {
@@ -172,12 +182,19 @@ public class RoomGeneratorController : GameController {
 				PlaceKey(pos);
 			}
 		}
+
+		MeshGenerator meshGenerator = new MeshGenerator();
+		meshGenerator.meshContainer = transform;
+		meshGenerator.Generate(wallCenterPoints);
 	}
 
 	void PlaceWall (Vector3 pos) {
-		GameObject wall = (GameObject)Instantiate(wallPrefab, pos, Quaternion.identity);
+//		GameObject wall = (GameObject)Instantiate(wallPrefab, pos, Quaternion.identity);
+		GameObject wall = ObjectPool.GetWall();
+		wall.transform.position = pos;
 		wall.transform.parent = wallContainer.transform;
 		wall.name = string.Format("{0},{1}", pos.x, pos.z);
+		wall.SetActive(true);
 	}
 
 	void PlacePlayer (Vector3 pos) {

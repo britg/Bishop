@@ -7,13 +7,18 @@ public class ObjectPoolController : GameController {
 
 	public GameObject poolContainer;
 	public int goldPoolCount;
+	public int wallPoolCount;
 
 	List<GameObject> goldPool;
 	GameObject goldPrefab;
 
+	List<GameObject> wallPool;
+	GameObject wallPrefab;
+
 	// Use this for initialization
 	void Start () {
-		PoolGold();
+//		PoolGold();
+		PoolWalls();
 	}
 	
 	// Update is called once per frame
@@ -29,6 +34,17 @@ public class ObjectPoolController : GameController {
 			gold.transform.SetParent(poolContainer.transform);
 			gold.SetActive(false);
 			goldPool.Add(gold);
+		}
+	}
+
+	void PoolWalls () {
+		wallPool = new List<GameObject>();
+		wallPrefab = ItemReferences.wallPrefab;
+		for (int i = 0; i < wallPoolCount; i++) {
+			var wall = (GameObject)Instantiate(wallPrefab);
+			wall.transform.SetParent(poolContainer.transform);
+			wall.SetActive(false);
+			wallPool.Add(wall);
 		}
 	}
 
@@ -52,6 +68,30 @@ public class ObjectPoolController : GameController {
 	public void ReturnGold (List<GameObject> goldList) {
 		goldList.Select(x => { x.SetActive(false); return x; });
 		goldPool.AddRange(goldList);
+	}
+
+
+	public List<GameObject> GetWallAmount (int amount) {
+		var toRemove = wallPool.GetRange(0, amount);
+		wallPool.RemoveRange(0, amount);
+		return toRemove;
+	}
+
+	public GameObject GetWall () {
+		var wall = wallPool[0];
+		wallPool.RemoveAt(0);
+		return wall;
+	}
+
+	public void ReturnWall (GameObject wallObj) {
+		wallObj.transform.SetParent(poolContainer.transform);
+		wallObj.SetActive(false);
+		wallPool.Add(wallObj);
+	}
+
+	public void ReturnWall (List<GameObject> wallList) {
+		wallList.Select(x => { x.SetActive(false); return x; });
+		wallPool.AddRange(wallList);
 	}
 
 }
