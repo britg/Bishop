@@ -26,6 +26,7 @@ public class RoomGeneratorController : GameController {
 	public GameObject rail;
 	public int enemyIncreasePerRoom = 2;
 	public float keyRoomChance;
+	public int doorEveryCountRooms = 1;
 
 	public GameObject wallPrefab;
 	public GameObject enemySpawnerPrefab;
@@ -76,7 +77,7 @@ public class RoomGeneratorController : GameController {
 	void CheckRailPosition () {
 		if (rail.transform.position.z >= nextRoomTrigger) {
 //			ActivateNextRoom();
-			BuildRoom();
+//			BuildRoom();
 			CullRoom();
 		}
 	}
@@ -104,7 +105,7 @@ public class RoomGeneratorController : GameController {
 		roomGenerator = new RoomGenerator(seed);
 
         // Force a door ever 3 rooms
-        if (roomCount % 3 == 0) {
+		if (roomCount % doorEveryCountRooms == 0) {
             keyRoomChance = 100f;
         } else {
             keyRoomChance = 0f;
@@ -125,14 +126,19 @@ public class RoomGeneratorController : GameController {
 		GameObject firstRoom = roomObjs[0];
 		if (firstRoom.transform.position.z < (rail.transform.position.z - 1.5*roomTemplate.bounds.size.z)) {
 			roomObjs.Remove(firstRoom);
-			RemoveRoomObject(firstRoom);
+			Destroy (firstRoom);
+//			RemoveRoomObject(firstRoom);
 		}
 	}
 
 	void RemoveRoomObject (GameObject roomObj) {
 		Transform walls = roomObj.transform.FindChild("Walls");
+		List<GameObject> wallsToReturn = new List<GameObject>();
 		foreach (Transform wall in walls) {
-			ObjectPool.ReturnWall(wall.gameObject);
+			wallsToReturn.Add (wall.gameObject);
+		}
+		foreach (GameObject wallToReturn in wallsToReturn) {
+			ObjectPool.ReturnWall(wallToReturn);
 		}
 		Destroy(roomObj);
 	}
@@ -189,7 +195,12 @@ public class RoomGeneratorController : GameController {
 	}
 
 	void PlaceWall (Vector3 pos) {
-//		GameObject wall = (GameObject)Instantiate(wallPrefab, pos, Quaternion.identity);
+		GameObject wall = (GameObject)Instantiate(wallPrefab, pos, Quaternion.identity);
+		wall.transform.parent = wallContainer.transform;
+		wall.name = string.Format("{0},{1}", pos.x, pos.z);
+	}
+
+	void PlaceWallPooled (Vector3 pos) {
 		GameObject wall = ObjectPool.GetWall();
 		wall.transform.position = pos;
 		wall.transform.parent = wallContainer.transform;

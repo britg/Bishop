@@ -23,7 +23,6 @@ public class ObjectPoolController : GameController {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	void PoolGold () {
@@ -89,7 +88,7 @@ public class ObjectPoolController : GameController {
 		wallPool.Add(wallObj);
 	}
 
-	public void ReturnWall (List<GameObject> wallList) {
+	public void ReturnWalls (List<GameObject> wallList) {
 		wallList.Select(x => { x.SetActive(false); return x; });
 		wallPool.AddRange(wallList);
 	}

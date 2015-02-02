@@ -42,7 +42,9 @@ public class PlayerController : GameController {
 
 	void MovePlayer () {
 		Vector3 frameMove = player.Velocity * Time.deltaTime;
-		transform.position += frameMove;
+		Vector3 newPos = transform.position + frameMove;
+		newPos.z = Mathf.Clamp(newPos.z, -15f, Mathf.Infinity);
+		transform.position = newPos;
 	}
 
 	void AttemptTurnOrStop () {
@@ -103,7 +105,7 @@ public class PlayerController : GameController {
 	}
 
 	bool CanMove() {
-		if (!canMove) {
+		if (!canMove || Paused) {
 			return false;
 		}
 		var frameDestination = transform.position + (player.Velocity*Time.deltaTime);

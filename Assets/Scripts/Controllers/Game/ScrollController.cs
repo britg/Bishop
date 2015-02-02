@@ -33,6 +33,9 @@ public class ScrollController : GameController {
 		}
 	}
 
+	public void ResetOnPlayer () {
+		iTween.MoveTo (gameObject, iTween.Hash("position", player.CurrentPosition, "time", 3f));
+	}
 
 
 }
