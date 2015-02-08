@@ -4,8 +4,11 @@ using System.Collections;
 public class ScrollController : GameController {
 
 	Player player;
+	public float scrollSpeedZ = 3f;
+	public float doorIncreaseZ = 0.5f;
 	public Vector3 scrollSpeed;
 	public Vector3 scrollAccel;
+	public Vector3 doorAccel;
 	public Vector3 maxSpeed;
 
 	void Start () {
@@ -15,6 +18,9 @@ public class ScrollController : GameController {
 	
 	// Update is called once per frame
 	void Update () {
+	}
+
+	void LateUpdate () {
 		if (Paused) {
 			return;
 		}
@@ -23,18 +29,18 @@ public class ScrollController : GameController {
 	}
 
 	void MoveFrame () {
-		Vector3 frameMove = scrollSpeed * Time.deltaTime;
-		transform.position += frameMove;
-		player.Distance += frameMove.z;
-		player.runStats.AddDistance(frameMove.z);
-
-		if (scrollSpeed.z < maxSpeed.z) {
-			scrollSpeed += scrollAccel * Time.deltaTime;
-		}
+		float frameMoveZ = scrollSpeedZ * Time.deltaTime;
+		transform.position += new Vector3(0f, 0f, frameMoveZ);
+		player.Distance += frameMoveZ;
+		player.runStats.AddDistance(frameMoveZ);
 	}
 
 	public void ResetOnPlayer () {
 		iTween.MoveTo (gameObject, iTween.Hash("position", player.CurrentPosition, "time", 3f));
+	}
+
+	public void OnDoor () {
+		scrollSpeedZ += doorIncreaseZ;
 	}
 
 

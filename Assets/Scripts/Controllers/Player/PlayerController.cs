@@ -117,6 +117,7 @@ public class PlayerController : GameController {
 	}
 
 	bool CanTurn () {
+//		return true;
 		return pathingService.TurnValid(player.NextDirection);
 	}
 

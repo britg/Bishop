@@ -48,6 +48,7 @@ public class RoomGeneratorController : GameController {
 		RemoveExistingRooms();
 		BuildRooms();
 		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
+		player.onDailyRun = false;
 		ShowNormal();
 	}
 
@@ -56,6 +57,7 @@ public class RoomGeneratorController : GameController {
 		RemoveExistingRooms();
 		BuildRooms();
 		PlacePlayer(new Vector3(0f, 0f, -currentRoom.bounds.extents.z));
+		player.onDailyRun = true;
 		ShowDaily();
 	}
 
@@ -94,6 +96,13 @@ public class RoomGeneratorController : GameController {
 			BuildRoom();
 		}
 		nextRoomTrigger = roomTemplate.bounds.size.z * (roomCountToGenerate-2);
+	}
+
+	public void OnDoor () {
+		for (int i = 0; i < roomCountToGenerate/2; i++) {
+			BuildRoom();
+			CullRoom();
+		}
 	}
 
 

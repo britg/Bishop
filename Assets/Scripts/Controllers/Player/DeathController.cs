@@ -23,6 +23,7 @@ public class DeathController : GameController {
 		}
 		if (player.Dead && !inTransition) {
 			DoDeadTransition();
+			player.SaveDailyScoreIfDaily();
 		}
 		//CheckOffScreen();
 	}

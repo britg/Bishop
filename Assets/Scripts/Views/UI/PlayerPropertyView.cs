@@ -14,7 +14,8 @@ public class PlayerPropertyView : GameBehaviour {
 		HighScore,
 		Keys,
 		Distance,
-		BestDistance
+		BestDistance,
+		BestDailyDistance
 	}
 
 	Player player;
@@ -57,6 +58,8 @@ public class PlayerPropertyView : GameBehaviour {
 			textView.text = string.Format("{0}m", player.Distance.ToString("F0"));
 		} else if (propertyToWatch == Property.BestDistance) {
 			textView.text = string.Format("{0}m", player.BestDistance.ToString("F0"));
+		} else if (propertyToWatch == Property.BestDailyDistance) {
+			textView.text = string.Format("{0}m", player.BestDailyDistance.ToString("F0"));
 		}
 
 	}

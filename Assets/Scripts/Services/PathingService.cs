@@ -7,7 +7,7 @@ public class PathingService {
 	Agent agent;
 	float halfLaneWidth = 1f;
 	float sphereRadius = 0.005f;
-	float turnForgiveness = 0.2f;
+	float turnForgiveness = 0.5f;
 
 	public PathingService (Agent _agent, float _turnForgiveness) {
 		agent = _agent;

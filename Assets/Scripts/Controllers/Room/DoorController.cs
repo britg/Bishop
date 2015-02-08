@@ -21,6 +21,7 @@ public class DoorController : GameController {
 		MovePlayerToDoorCenter();
 		ScrollingController.ResetOnPlayer();
 		RaiseDoor();
+		SpeedUp();
     }
 
     public void OnNotOpen () {
@@ -42,5 +43,15 @@ public class DoorController : GameController {
 	void Continue () {
 		Unpause();
 		Destroy(gameObject);
+	}
+
+	void SpeedUp () {
+		GameObject railObj = GameObject.Find("Rail");
+		ScrollController scrollController = railObj.GetComponent<ScrollController>();
+		scrollController.OnDoor();
+
+		GameObject roomGenerator = GameObject.Find("RoomGenerator");
+		RoomGeneratorController roomGeneratorController = roomGenerator.GetComponent<RoomGeneratorController>();
+		roomGeneratorController.OnDoor();
 	}
 }

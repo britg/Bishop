@@ -16,7 +16,9 @@ public class TouchInputController : GameController {
 
 	Vector3 frameSwipeDistance = Vector3.zero;
 	Vector3 currentSwipeDistance = Vector3.zero;
-	public float requiredSwipeDistance = 100f;
+
+	public float requiredSwipeDistance;
+	public float swipeFactorBase = 2000f;
 
 	Vector3 lastMousePosition;
 
@@ -32,7 +34,7 @@ public class TouchInputController : GameController {
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();
-		requiredSwipeDistance = Screen.height / 2000f * requiredSwipeDistance;
+		requiredSwipeDistance = Screen.height / swipeFactorBase * requiredSwipeDistance;
 	}
 	
 	// Update is called once per frame

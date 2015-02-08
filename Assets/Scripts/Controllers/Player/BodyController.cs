@@ -17,8 +17,6 @@ public class BodyController : GameController {
     public float goldPickupY = 3f;
 	public float itemPickupTime = 0.3f;
 
-    public int doorCost = 20;
-
 	// Use this for initialization
 	void Start () {
 		player = GetPlayer();

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 public class Player : Agent {
 
+	static string VERSION = "0.0.1";
+
 	static string GOLD = "gold";
 	static string SCORE = "points";
 	static string DISTANCE = "distance";
 	static string SWORDLEVEL = "swordlevel";
 	static string HEARTS = "hearts";
 	static string LAST_DAILY_ATTEMPT = "lastdailyattempt";
+	static string LAST_DAILY_SCORE = "lastdailyscore";
 
 	[System.Serializable]
 	public class Properties {
@@ -45,7 +48,9 @@ public class Player : Agent {
 	public string 	DeadBy { get; set; }
 	public float 	Distance { get; set; }
 	public float 	BestDistance { get; set; }
+	public float 	BestDailyDistance { get; set; }
 	public int		lastDailySeedAttempted { get; set; }
+	public bool		onDailyRun { get; set; }
 
 	public bool 	isAttacking { get; set; }
 
@@ -112,25 +117,25 @@ public class Player : Agent {
 	}
 
 	public void SaveScore () {
-		if (ES2.Exists (SCORE)) {
-			int prevRecord = ES2.Load<int>(SCORE);
+		if (ES2.Exists (SCORE + VERSION)) {
+			int prevRecord = ES2.Load<int>(SCORE + VERSION);
 			if (Points <= prevRecord) {
 				return;
 			}
 		} 
 
-		ES2.Save(Points, SCORE);
+		ES2.Save(Points, SCORE + VERSION);
 	}
 
 	public void SaveDistance () {
-		if (ES2.Exists (DISTANCE)) {
-			float prevRecord = ES2.Load<float>(DISTANCE);
+		if (ES2.Exists (DISTANCE + VERSION)) {
+			float prevRecord = ES2.Load<float>(DISTANCE + VERSION);
 			if (Distance <= prevRecord) {
 				return;
 			}
 		} 
-		
-		ES2.Save(Distance, DISTANCE);
+		GameCenterBinding.reportScore((int)Distance, GameCenterController.NORMAL_ID);
+		ES2.Save(Distance, DISTANCE + VERSION);
 	}
 
 	public void SaveSwordLevel () {
@@ -161,14 +166,14 @@ public class Player : Agent {
 	}
 
 	void LoadScore () {
-		if (ES2.Exists(SCORE)) {
-			HighScore = ES2.Load<int>(SCORE);
+		if (ES2.Exists(SCORE + VERSION)) {
+			HighScore = ES2.Load<int>(SCORE + VERSION);
 		}
 	}
 
 	void LoadDistance () {
-		if (ES2.Exists(DISTANCE)) {
-			BestDistance = ES2.Load<float>(DISTANCE);
+		if (ES2.Exists(DISTANCE + VERSION)) {
+			BestDistance = ES2.Load<float>(DISTANCE + VERSION);
 		}
 	}
 
@@ -195,12 +200,12 @@ public class Player : Agent {
 
 	public void RecordLastDailySeed () {
 		lastDailySeedAttempted = ES2.Load<int>(DailyApiController.DAILY_SEED);
-		ES2.Save(lastDailySeedAttempted, LAST_DAILY_ATTEMPT);
+		ES2.Save(lastDailySeedAttempted, LAST_DAILY_ATTEMPT + VERSION);
 	}
 
 	public void ReverseLastDailySeed () {
-		if (ES2.Exists(LAST_DAILY_ATTEMPT)) {
-			ES2.Delete(LAST_DAILY_ATTEMPT);
+		if (ES2.Exists(LAST_DAILY_ATTEMPT + VERSION)) {
+			ES2.Delete(LAST_DAILY_ATTEMPT + VERSION);
 			lastDailySeedAttempted = 0;
 		}
 	}
@@ -211,10 +216,16 @@ public class Player : Agent {
 
 
 	void LoadLastDailyAttempt () {
-		if (ES2.Exists(LAST_DAILY_ATTEMPT)) {
-			lastDailySeedAttempted = ES2.Load<int>(LAST_DAILY_ATTEMPT);
+		if (ES2.Exists(LAST_DAILY_ATTEMPT + VERSION)) {
+			lastDailySeedAttempted = ES2.Load<int>(LAST_DAILY_ATTEMPT + VERSION);
 		} else {
 			lastDailySeedAttempted = 0;
+		}
+
+		if (ES2.Exists(LAST_DAILY_SCORE + VERSION)) {
+			BestDailyDistance = ES2.Load<int>(LAST_DAILY_SCORE + VERSION);
+		} else {
+			BestDailyDistance = 0;
 		}
 	}
 
@@ -225,6 +236,13 @@ public class Player : Agent {
 			} else {
 				return false;
 			}
+		}
+	}
+
+	public void SaveDailyScoreIfDaily () {
+		if (onDailyRun) {
+			ES2.Save((int)Distance, LAST_DAILY_SCORE + VERSION);
+			GameCenterBinding.reportScore((int)Distance, GameCenterController.DAILY_ID);
 		}
 	}
 
