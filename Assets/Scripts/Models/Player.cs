@@ -134,7 +134,9 @@ public class Player : Agent {
 				return;
 			}
 		} 
+#if UNITY_IPHONE
 		GameCenterBinding.reportScore((int)Distance, GameCenterController.NORMAL_ID);
+#endif
 		ES2.Save(Distance, DISTANCE + VERSION);
 	}
 
@@ -242,7 +244,9 @@ public class Player : Agent {
 	public void SaveDailyScoreIfDaily () {
 		if (onDailyRun) {
 			ES2.Save((int)Distance, LAST_DAILY_SCORE + VERSION);
+#if UNITY_IPHONE
 			GameCenterBinding.reportScore((int)Distance, GameCenterController.DAILY_ID);
+#endif
 		}
 	}
 
